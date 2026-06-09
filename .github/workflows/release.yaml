@@ -1,0 +1,80 @@
+name: Release Python Web3 Connector
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  detect-clients:
+    runs-on: ubuntu-latest
+    outputs:
+      clients: ${{ steps.detect.outputs.clients }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Detect all clients
+        id: detect
+        run: |
+          ALL_CLIENTS=$(ls -d clients/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1] + ["common"]')
+          echo "Detected clients: $ALL_CLIENTS"
+          echo "clients=$ALL_CLIENTS" >> $GITHUB_ENV
+          echo "::set-output name=clients::$ALL_CLIENTS"
+
+  release:
+    needs: detect-clients
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 2
+      matrix:
+        client: ${{ fromJson(needs.detect-clients.outputs.clients) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Compare versions
+        id: version
+        run: |
+          cd clients/${{ matrix.client }}
+          old_version=$(git show HEAD^:clients/${{ matrix.client }}/pyproject.toml | grep '^version' | head -1 | sed -E 's/version = "(.*)"/\1/')
+
+          new_version=$(grep '^version' pyproject.toml | head -1 | sed -E 's/version = "(.*)"/\1/')
+
+          if [ "$old_version" = "$new_version" ]; then
+            echo "release_needed=false" >> $GITHUB_OUTPUT
+          else
+            echo "release_needed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set working directory path
+        if: steps.version.outputs.release_needed == 'true'
+        id: path
+        run: echo "dir=$([[ '${{ matrix.client }}' == 'common' ]] && echo 'common' || echo 'clients/${{ matrix.client }}')" >> $GITHUB_OUTPUT
+
+      - name: Install dependencies
+        if: steps.version.outputs.release_needed == 'true'
+        working-directory: ${{ steps.path.outputs.dir }}
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Configure Poetry
+        if: steps.version.outputs.release_needed == 'true'
+        working-directory: ${{ steps.path.outputs.dir }}
+        run: |
+          poetry install
+          poetry config pypi-token.pypi ${{ secrets.PYPI_CLIENTS_TOKEN }}
+
+      - name: Build (release)
+        if: steps.version.outputs.release_needed == 'true'
+        working-directory: ${{ steps.path.outputs.dir }}
+        run: poetry build
+
+      - name: Publish to pypi
+        if: steps.version.outputs.release_needed == 'true'
+        working-directory: ${{ steps.path.outputs.dir }}
+        run: poetry publish
