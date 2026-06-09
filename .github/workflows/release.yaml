@@ -18,7 +18,7 @@ jobs:
       - name: Detect all clients
         id: detect
         run: |
-          ALL_CLIENTS=$(ls -d clients/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1] + ["common"]')
+          ALL_CLIENTS=$(ls -d clients/*/ | xargs -n 1 basename | jq -R -s -c 'split("\n")[:-1]')
           echo "Detected clients: $ALL_CLIENTS"
           echo "clients=$ALL_CLIENTS" >> $GITHUB_ENV
           echo "::set-output name=clients::$ALL_CLIENTS"

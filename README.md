@@ -19,7 +19,7 @@ Before using the SDK, ensure you have:
 
 ## Available SDK
 
-- [binance-sdk-web3-wallet](./clients/web3-wallet) - Web3 Wallet connector
+- [binance-web3-wallet](./clients/web3-wallet) - Web3 Wallet connector
 
 ## Documentation
 
@@ -30,11 +30,11 @@ For detailed information, refer to the [Binance API Documentation](https://web3.
 Each connector is published as a separate Python package. You can install them via `pip` or `poetry`. For example:
 
 ```bash
-pip install binance-sdk-web3-wallet
+pip install binance-web3-wallet
 ```
 
 ```bash
-poetry add binance-sdk-web3-wallet
+poetry add binance-web3-wallet
 ```
 
 ## Contributing
