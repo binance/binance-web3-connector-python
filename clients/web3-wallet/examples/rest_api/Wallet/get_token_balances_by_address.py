@@ -7,7 +7,7 @@ from binance_sdk_web3_wallet.web3_wallet import (
     WEB3_WALLET_REST_API_PROD_URL,
 )
 
-from binance_sdk_web3_wallet.rest_api.models.get_token_balances_by_address_request_token_contract_addresses_inner import (
+from src.rest_api.models.get_token_balances_by_address_request_token_contract_addresses_inner import (
     GetTokenBalancesByAddressRequestTokenContractAddressesInner,
 )
 

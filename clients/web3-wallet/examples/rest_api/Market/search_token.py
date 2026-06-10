@@ -22,21 +22,21 @@ configuration_rest_api = ConfigurationRestAPI(
 client = Web3Wallet(config_rest_api=configuration_rest_api)
 
 
-def search_tokens():
+def search_token():
     try:
-        response = client.rest_api.search_tokens(
+        response = client.rest_api.search_token(
             chains="1,56,CT_501",
             search="USDT",
         )
 
         rate_limits = response.rate_limits
-        logging.info(f"search_tokens() rate limits: {rate_limits}")
+        logging.info(f"search_token() rate limits: {rate_limits}")
 
         data = response.data()
-        logging.info(f"search_tokens() response: {data}")
+        logging.info(f"search_token() response: {data}")
     except Exception as e:
-        logging.error(f"search_tokens() error: {e}")
+        logging.error(f"search_token() error: {e}")
 
 
 if __name__ == "__main__":
-    search_tokens()
+    search_token()
