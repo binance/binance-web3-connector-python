@@ -1,1 +1,1 @@
-NAME = "binance-sdk-web3-wallet"
+NAME = "binance-web3-wallet"

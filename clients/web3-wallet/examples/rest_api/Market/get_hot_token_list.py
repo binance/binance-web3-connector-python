@@ -22,20 +22,18 @@ configuration_rest_api = ConfigurationRestAPI(
 client = Web3Wallet(config_rest_api=configuration_rest_api)
 
 
-def get_all_tokens():
+def get_hot_token_list():
     try:
-        response = client.rest_api.get_all_tokens(
-            binance_chain_id="56",
-        )
+        response = client.rest_api.get_hot_token_list()
 
         rate_limits = response.rate_limits
-        logging.info(f"get_all_tokens() rate limits: {rate_limits}")
+        logging.info(f"get_hot_token_list() rate limits: {rate_limits}")
 
         data = response.data()
-        logging.info(f"get_all_tokens() response: {data}")
+        logging.info(f"get_hot_token_list() response: {data}")
     except Exception as e:
-        logging.error(f"get_all_tokens() error: {e}")
+        logging.error(f"get_hot_token_list() error: {e}")
 
 
 if __name__ == "__main__":
-    get_all_tokens()
+    get_hot_token_list()

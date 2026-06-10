@@ -26,7 +26,7 @@ def get_token_basic_info():
     try:
         response = client.rest_api.get_token_basic_info(
             binance_chain_id="1",
-            token_contract_address="0xdAC17F958D2ee523a2206206994597C13D831ec7",
+            token_contract_address="0xdac17f958d2ee523a2206206994597c13d831ec7",
         )
 
         rate_limits = response.rate_limits

@@ -7,7 +7,7 @@ from . import metadata
 from .rest_api import Web3WalletRestAPI
 
 LIB_NAME = metadata.NAME
-LIB_VERSION = "1.0.0"
+LIB_VERSION = version(LIB_NAME)
 
 
 class Web3Wallet:

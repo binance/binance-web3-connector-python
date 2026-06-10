@@ -22,18 +22,18 @@ configuration_rest_api = ConfigurationRestAPI(
 client = Web3Wallet(config_rest_api=configuration_rest_api)
 
 
-def get_price():
+def get_token_trading_info():
     try:
-        response = client.rest_api.get_price()
+        response = client.rest_api.get_token_trading_info()
 
         rate_limits = response.rate_limits
-        logging.info(f"get_price() rate limits: {rate_limits}")
+        logging.info(f"get_token_trading_info() rate limits: {rate_limits}")
 
         data = response.data()
-        logging.info(f"get_price() response: {data}")
+        logging.info(f"get_token_trading_info() response: {data}")
     except Exception as e:
-        logging.error(f"get_price() error: {e}")
+        logging.error(f"get_token_trading_info() error: {e}")
 
 
 if __name__ == "__main__":
-    get_price()
+    get_token_trading_info()
