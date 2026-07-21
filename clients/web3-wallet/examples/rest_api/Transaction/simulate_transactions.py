@@ -26,6 +26,8 @@ def simulate_transactions():
     try:
         response = client.rest_api.simulate_transactions(
             binance_chain_id="binance_chain_id_example",
+            evm_tx=(),
+            sol_tx=(),
         )
 
         rate_limits = response.rate_limits

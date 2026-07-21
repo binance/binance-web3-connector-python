@@ -29,7 +29,6 @@ def build_swap_transaction():
             amount="1000000",
             from_token_address="0x55d398326f99059fF775485246999027B3197955",
             to_token_address="0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
-            slippage_percent="0.5",
             user_wallet_address="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
             quote_id="a1b2c3d4e5f64a8b9c0d1e2f3a4b5c6d",
         )
