@@ -26,6 +26,8 @@ def get_gas_limit():
     try:
         response = client.rest_api.get_gas_limit(
             binance_chain_id="binance_chain_id_example",
+            evm_tx=(),
+            sol_tx=(),
         )
 
         rate_limits = response.rate_limits
