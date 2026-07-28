@@ -186,6 +186,15 @@ from .get_gas_limit_request_evm_tx import (
 from .get_gas_limit_request_sol_tx import (
     GetGasLimitRequestSolTx as GetGasLimitRequestSolTx,
 )
+from .get_gas_limit_request_tron_tx import (
+    GetGasLimitRequestTronTx as GetGasLimitRequestTronTx,
+)
+from .get_gas_limit_request_tron_tx_transfer_contract_params import (
+    GetGasLimitRequestTronTxTransferContractParams as GetGasLimitRequestTronTxTransferContractParams,
+)
+from .get_gas_limit_request_tron_tx_trigger_smart_contract_params import (
+    GetGasLimitRequestTronTxTriggerSmartContractParams as GetGasLimitRequestTronTxTriggerSmartContractParams,
+)
 from .get_gas_limit_response import GetGasLimitResponse as GetGasLimitResponse
 from .get_gas_limit_response_data import (
     GetGasLimitResponseData as GetGasLimitResponseData,
@@ -460,6 +469,9 @@ from .simulate_transactions_request_evm_tx import (
 )
 from .simulate_transactions_request_sol_tx import (
     SimulateTransactionsRequestSolTx as SimulateTransactionsRequestSolTx,
+)
+from .simulate_transactions_request_tron_tx import (
+    SimulateTransactionsRequestTronTx as SimulateTransactionsRequestTronTx,
 )
 from .simulate_transactions_response import (
     SimulateTransactionsResponse as SimulateTransactionsResponse,

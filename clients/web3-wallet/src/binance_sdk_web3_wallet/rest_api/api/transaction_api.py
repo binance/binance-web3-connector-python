@@ -24,8 +24,10 @@ from ..models import GetTransactionSupportedChainsResponse
 from ..models import SimulateTransactionsResponse
 from ..models import GetGasLimitRequestEvmTx
 from ..models import GetGasLimitRequestSolTx
+from ..models import GetGasLimitRequestTronTx
 from ..models import SimulateTransactionsRequestEvmTx
 from ..models import SimulateTransactionsRequestSolTx
+from ..models import SimulateTransactionsRequestTronTx
 
 
 class TransactionApi:
@@ -56,12 +58,12 @@ class TransactionApi:
                 https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/transaction-api#broadcast-transactions
 
                 Broadcast a client-signed transaction to the chain via the Binance Web3 API relay. Returns the transaction hash and an internal `orderId` you can use to track on-chain status via the post-transaction service.
-        Optional MEV protection (EVM chains only) routes the transaction through a private mempool to mitigate front-running and sandwich attacks.
+        Optional MEV protection (EVM chains only) routes the transaction through a private mempool to mitigate front-running and sandwich attacks. Tron and Solana do not support MEV protection; the flag is ignored on these chains.
 
                 Args:
-                    binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana).
-                    signed_transaction (Union[str, None]): Client-signed raw transaction. EVM chains use a hex-encoded RLP transaction; Solana uses a base64-encoded signed transaction.
-                    address (Union[str, None]): Sender wallet address. Used for status attribution and signature verification.
+                    binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana, "CT_195"=Tron).
+                    signed_transaction (Union[str, None]): Client-signed raw transaction. Format depends on `binanceChainId`:  - **EVM chains**: hex-encoded RLP transaction (e.g. `0xf86c...`). - **Solana (`CT_501`)**: base64-encoded signed transaction. - **Tron (`CT_195`)**: JSON string of the signed transaction   returned by a Tron signer, containing `raw_data` (with   `contract[].parameter.value.owner_address`) and a `signature`   array. Example:   `{"raw_data":{"contract":[{"type":"TriggerSmartContract","parameter":{"value":{"owner_address":"T...","contract_address":"T...","data":"<calldata hex>","call_value":0}}}]},"signature":["..."]}`.   Note for Tron: `signedTransaction` is NOT the calldata hex passed to `simulate` / `getGasLimit` under `tronTx.triggerSmartContractParams.data`. The signer is extracted from `raw_data.contract[0].parameter.value.owner_address` and must match `address`; passing calldata hex here will be rejected with `code=40001, invalid signedTransaction: failed to parse Tron signedTransaction: syntax error`.
+                    address (Union[str, None]): Sender wallet address. Used for status attribution and signature verification. On Tron and Solana the address is case-sensitive base58check.
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
                     enable_mev_protection (Optional[bool] = None): When true, route the transaction through a private mempool for MEV protection.
@@ -194,6 +196,7 @@ class TransactionApi:
         binance_chain_id: Union[str, None],
         evm_tx: Union[GetGasLimitRequestEvmTx, None],
         sol_tx: Union[GetGasLimitRequestSolTx, None],
+        tron_tx: Union[GetGasLimitRequestTronTx, None],
         recv_window: Optional[int] = None,
         nonce: Optional[str] = None,
     ) -> ApiResponse[GetGasLimitResponse]:
@@ -203,12 +206,14 @@ class TransactionApi:
                 https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/transaction-api#get-gas-limit
 
                 Estimate the gas limit (or compute-unit ceiling on Solana) for an unsigned transaction.
-        Provide either `evmTx` for EVM chains or `solTx` for Solana, matching the value of `binanceChainId`.
+        Provide either `evmTx` for EVM chains, `solTx` for Solana, or `tronTx` for Tron ("CT_195"), matching the value of `binanceChainId`.
+        On Tron the response carries energy/bandwidth fields instead of a single gas limit; `gasLimit` is the fee limit (in sun) and the energy/bandwidth fields describe resource consumption and pricing.
 
                 Args:
-                    binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana). Provide `evmTx` for EVM chains or `solTx` for Solana — exactly one must be present. Note: both `evmTx` and `solTx` are marked required in this schema for rendering purposes only; in practice supply exactly one matching `binanceChainId`.
+                    binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana, "CT_195"=Tron). Provide `evmTx` for EVM chains, `solTx` for Solana, or `tronTx` for Tron — exactly one must be present. Note: `evmTx`, `solTx`, and `tronTx` are marked required in this schema for rendering purposes only; in practice supply exactly one matching `binanceChainId`.
                     evm_tx (Union[GetGasLimitRequestEvmTx, None]):
                     sol_tx (Union[GetGasLimitRequestSolTx, None]):
+                    tron_tx (Union[GetGasLimitRequestTronTx, None]):
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
 
@@ -233,6 +238,10 @@ class TransactionApi:
             raise RequiredError(
                 field="sol_tx", error_message="Missing required parameter 'sol_tx'"
             )
+        if tron_tx is None:
+            raise RequiredError(
+                field="tron_tx", error_message="Missing required parameter 'tron_tx'"
+            )
 
         body = {}
         headers = {"recv_window": recv_window, "nonce": nonce}
@@ -240,6 +249,7 @@ class TransactionApi:
             "binance_chain_id": binance_chain_id,
             "evm_tx": evm_tx,
             "sol_tx": sol_tx,
+            "tron_tx": tron_tx,
         }
 
         return send_request(
@@ -270,11 +280,13 @@ class TransactionApi:
                 Query the current network gas price for the specified chain. The response shape varies by chain family:
         - EVM chains return both `evmLegacyGasPrice` (legacy gasPrice) and
           `eip1559GasPrice` (baseFee + priority/max fees) when EIP-1559 is supported.
-        - Solana returns `solanaGasPrice` (compute-unit prices and Jito tips).
+        - Solana returns `solanaGasPrice` (compute-unit prices and Jito tips). - Tron ("CT_195") returns an empty `data` object because Tron has no
+          on-chain gas-price concept; use the gas-limit endpoint instead.
+
         Fields not applicable to the chain family are returned as `null`.
 
                 Args:
-                    binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana).
+                    binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana, "CT_195"=Tron).
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
 
@@ -359,6 +371,7 @@ class TransactionApi:
         binance_chain_id: Union[str, None],
         evm_tx: Union[SimulateTransactionsRequestEvmTx, None],
         sol_tx: Union[SimulateTransactionsRequestSolTx, None],
+        tron_tx: Union[SimulateTransactionsRequestTronTx, None],
         recv_window: Optional[int] = None,
         nonce: Optional[str] = None,
     ) -> ApiResponse[SimulateTransactionsResponse]:
@@ -368,12 +381,14 @@ class TransactionApi:
                 https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/transaction-api#simulate-transactions
 
                 Simulate transaction execution off-chain to predict its outcome before broadcasting. The response includes the predicted execution status, balance changes per affected account/token, and ERC-20 allowance changes (EVM chains).
-        Provide either `evmTx` (EVM chains) or `solTx` (Solana) matching `binanceChainId`.
+        Provide either `evmTx` (EVM chains), `solTx` (Solana), or `tronTx` (Tron "CT_195") matching `binanceChainId`. On Tron, `allowanceChanges` is returned as an empty array.
+        Note: Metis (chainId 1088) is not supported by this endpoint.
 
                 Args:
-                    binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana). Provide `evmTx` for EVM chains or `solTx` for Solana — exactly one must be present. Note: both `evmTx` and `solTx` are marked required in this schema for rendering purposes only; in practice supply exactly one matching `binanceChainId`.
+                    binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana, "CT_195"=Tron). Provide `evmTx` for EVM chains, `solTx` for Solana, or `tronTx` for Tron — exactly one must be present. Note: `evmTx`, `solTx`, and `tronTx` are marked required in this schema for rendering purposes only; in practice supply exactly one matching `binanceChainId`.
                     evm_tx (Union[SimulateTransactionsRequestEvmTx, None]):
                     sol_tx (Union[SimulateTransactionsRequestSolTx, None]):
+                    tron_tx (Union[SimulateTransactionsRequestTronTx, None]):
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
 
@@ -398,6 +413,10 @@ class TransactionApi:
             raise RequiredError(
                 field="sol_tx", error_message="Missing required parameter 'sol_tx'"
             )
+        if tron_tx is None:
+            raise RequiredError(
+                field="tron_tx", error_message="Missing required parameter 'tron_tx'"
+            )
 
         body = {}
         headers = {"recv_window": recv_window, "nonce": nonce}
@@ -405,6 +424,7 @@ class TransactionApi:
             "binance_chain_id": binance_chain_id,
             "evm_tx": evm_tx,
             "sol_tx": sol_tx,
+            "tron_tx": tron_tx,
         }
 
         return send_request(
