@@ -33,7 +33,9 @@ class BroadcastTransactionsResponseData(BaseModel):
         alias="orderId",
     )
     tx_hash: Optional[StrictStr] = Field(
-        default=None, description="On-chain transaction hash.", alias="txHash"
+        default=None,
+        description="On-chain transaction hash. EVM chains return a hex hash; Tron returns a base58check hash; Solana returns a base58 hash.",
+        alias="txHash",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["orderId", "txHash"]

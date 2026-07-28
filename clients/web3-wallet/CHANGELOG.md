@@ -1,5 +1,22 @@
 # Changelog
 
+## 4.0.0 - 2026-07-28
+
+### Changed (2)
+
+- Added parameter `tron_tx`
+  - affected methods:
+    - `get_gas_limit()` (`POST /api/v1/dex/pre-transaction/gas-limit`)
+    - `simulate_transactions()` (`POST /api/v1/dex/pre-transaction/simulate`)
+
+- Modified response for `getGasLimit()` (`POST /api/v1/dex/pre-transaction/gas-limit`):
+  - `data`: property `energyFee` added
+  - `data`: property `energyRequired` added
+  - `data`: property `freeBandwidth` added
+  - `data`: property `freeEnergy` added
+  - `data`: property `bandwidthFee` added
+  - `data`: property `bandwidthRequired` added
+
 ## 3.0.0 - 2026-07-21
 
 ### Added (17)

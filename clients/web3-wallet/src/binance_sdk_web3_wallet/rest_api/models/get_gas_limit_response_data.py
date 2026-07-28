@@ -24,16 +24,54 @@ from typing_extensions import Self
 
 class GetGasLimitResponseData(BaseModel):
     """
-    GetGasLimitResponseData
+    Estimated gas limit. On Tron, the response additionally carries energy/bandwidth fields; non-applicable fields are returned as `null`.
     """  # noqa: E501
 
     gas_limit: Optional[StrictStr] = Field(
         default=None,
-        description="Estimated gas limit (EVM) or compute-unit ceiling (Solana), as an integer string.",
+        description="Estimated gas limit (EVM), compute-unit ceiling (Solana), or fee limit in sun (Tron), as an integer string.",
         alias="gasLimit",
     )
+    energy_required: Optional[StrictStr] = Field(
+        default=None,
+        description="Energy consumed by the Tron transaction (integer string). Null on non-Tron chains.",
+        alias="energyRequired",
+    )
+    bandwidth_required: Optional[StrictStr] = Field(
+        default=None,
+        description="Bandwidth consumed by the Tron transaction (integer string). Null on non-Tron chains.",
+        alias="bandwidthRequired",
+    )
+    free_energy: Optional[StrictStr] = Field(
+        default=None,
+        description="Free energy available to the account on Tron (integer string). Null on non-Tron chains.",
+        alias="freeEnergy",
+    )
+    free_bandwidth: Optional[StrictStr] = Field(
+        default=None,
+        description="Free bandwidth available to the account on Tron (integer string). Null on non-Tron chains.",
+        alias="freeBandwidth",
+    )
+    energy_fee: Optional[StrictStr] = Field(
+        default=None,
+        description="Unit price of energy on Tron (sun per energy, integer string). Null on non-Tron chains.",
+        alias="energyFee",
+    )
+    bandwidth_fee: Optional[StrictStr] = Field(
+        default=None,
+        description="Unit price of bandwidth on Tron (sun per byte, integer string). Null on non-Tron chains.",
+        alias="bandwidthFee",
+    )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = ["gasLimit"]
+    __properties: ClassVar[List[str]] = [
+        "gasLimit",
+        "energyRequired",
+        "bandwidthRequired",
+        "freeEnergy",
+        "freeBandwidth",
+        "energyFee",
+        "bandwidthFee",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,6 +124,39 @@ class GetGasLimitResponseData(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if energy_required (nullable) is None
+        # and model_fields_set contains the field
+        if self.energy_required is None and "energy_required" in self.model_fields_set:
+            _dict["energyRequired"] = None
+
+        # set to None if bandwidth_required (nullable) is None
+        # and model_fields_set contains the field
+        if (
+            self.bandwidth_required is None
+            and "bandwidth_required" in self.model_fields_set
+        ):
+            _dict["bandwidthRequired"] = None
+
+        # set to None if free_energy (nullable) is None
+        # and model_fields_set contains the field
+        if self.free_energy is None and "free_energy" in self.model_fields_set:
+            _dict["freeEnergy"] = None
+
+        # set to None if free_bandwidth (nullable) is None
+        # and model_fields_set contains the field
+        if self.free_bandwidth is None and "free_bandwidth" in self.model_fields_set:
+            _dict["freeBandwidth"] = None
+
+        # set to None if energy_fee (nullable) is None
+        # and model_fields_set contains the field
+        if self.energy_fee is None and "energy_fee" in self.model_fields_set:
+            _dict["energyFee"] = None
+
+        # set to None if bandwidth_fee (nullable) is None
+        # and model_fields_set contains the field
+        if self.bandwidth_fee is None and "bandwidth_fee" in self.model_fields_set:
+            _dict["bandwidthFee"] = None
+
         return _dict
 
     @classmethod
@@ -97,7 +168,17 @@ class GetGasLimitResponseData(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({"gasLimit": obj.get("gasLimit")})
+        _obj = cls.model_validate(
+            {
+                "gasLimit": obj.get("gasLimit"),
+                "energyRequired": obj.get("energyRequired"),
+                "bandwidthRequired": obj.get("bandwidthRequired"),
+                "freeEnergy": obj.get("freeEnergy"),
+                "freeBandwidth": obj.get("freeBandwidth"),
+                "energyFee": obj.get("energyFee"),
+                "bandwidthFee": obj.get("bandwidthFee"),
+            }
+        )
         # store additional fields in additional_properties
         for _key in obj.keys():
             if _key not in cls.__properties:

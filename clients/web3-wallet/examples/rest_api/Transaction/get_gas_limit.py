@@ -28,6 +28,7 @@ def get_gas_limit():
             binance_chain_id="binance_chain_id_example",
             evm_tx=(),
             sol_tx=(),
+            tron_tx=(),
         )
 
         rate_limits = response.rate_limits

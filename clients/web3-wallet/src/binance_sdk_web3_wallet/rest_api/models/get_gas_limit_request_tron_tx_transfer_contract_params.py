@@ -17,35 +17,25 @@ import json
 
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from typing import Any, ClassVar, Dict, List
+from typing_extensions import Annotated
+from typing import Optional, Set
 from typing_extensions import Self
 
 
-class GetTransactionSupportedChainsResponseDataInner(BaseModel):
+class GetGasLimitRequestTronTxTransferContractParams(BaseModel):
     """
-    GetTransactionSupportedChainsResponseDataInner
+    Required when `txType=TRANSFER_CONTRACT`.
     """  # noqa: E501
 
-    binance_chain_id: Optional[StrictStr] = Field(
-        default=None,
-        description='Unique chain identifier (follows EIP-155 chainId for EVM chains; e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana, "CT_195"=Tron).',
-        alias="binanceChainId",
+    to_address: StrictStr = Field(
+        description="Recipient address (base58check).", alias="toAddress"
     )
-    name: Optional[StrictStr] = Field(default=None, description="Full chain name.")
-    short_name: Optional[StrictStr] = Field(
-        default=None, description="Short chain name / ticker.", alias="shortName"
-    )
-    logo_url: Optional[StrictStr] = Field(
-        default=None, description="Chain logo image URL.", alias="logoUrl"
+    amount: Annotated[int, Field(strict=True, ge=1)] = Field(
+        description="TRX amount in sun (1 TRX = 1_000_000 sun)."
     )
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "binanceChainId",
-        "name",
-        "shortName",
-        "logoUrl",
-    ]
+    __properties: ClassVar[List[str]] = ["toAddress", "amount"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -68,7 +58,7 @@ class GetTransactionSupportedChainsResponseDataInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetTransactionSupportedChainsResponseDataInner from a JSON string"""
+        """Create an instance of GetGasLimitRequestTronTxTransferContractParams from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -102,7 +92,7 @@ class GetTransactionSupportedChainsResponseDataInner(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetTransactionSupportedChainsResponseDataInner from a dict"""
+        """Create an instance of GetGasLimitRequestTronTxTransferContractParams from a dict"""
         if obj is None:
             return None
 
@@ -110,12 +100,7 @@ class GetTransactionSupportedChainsResponseDataInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate(
-            {
-                "binanceChainId": obj.get("binanceChainId"),
-                "name": obj.get("name"),
-                "shortName": obj.get("shortName"),
-                "logoUrl": obj.get("logoUrl"),
-            }
+            {"toAddress": obj.get("toAddress"), "amount": obj.get("amount")}
         )
         # store additional fields in additional_properties
         for _key in obj.keys():

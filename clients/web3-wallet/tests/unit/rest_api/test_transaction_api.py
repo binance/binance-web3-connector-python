@@ -423,12 +423,34 @@ class TestTransactionApi:
             "sol_tx": {
                 "base64_tx": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAA=="
             },
+            "tron_tx": {
+                "from": "TJRabPrwbZy45sbavfcjinPJC18kjpRTv8",
+                "tx_type": "TRIGGER_SMART_CONTRACT",
+                "trigger_smart_contract_params": {
+                    "contract_address": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+                    "data": "a9059cbb000000000000000000000000d8dA6BF26964aF9D7eEd9e03E53415D37aA960450000000000000000000000000000000000000000000000000000000000f4240",
+                    "call_value": "0",
+                    "fee_limit_sun": "100000000",
+                },
+                "transfer_contract_params": {
+                    "to_address": "TJRabPrwbZy45sbavfcjinPJC18kjpRTv8",
+                    "amount": "1000000",
+                },
+            },
         }
 
         expected_response = {
             "code": 0,
             "msg": "success",
-            "data": {"gasLimit": "21000"},
+            "data": {
+                "gasLimit": "21000",
+                "energyRequired": "15000",
+                "bandwidthRequired": "268",
+                "freeEnergy": "14145",
+                "freeBandwidth": "600",
+                "energyFee": "210",
+                "bandwidthFee": "1000",
+            },
             "timestamp": 1748601600000,
             "success": True,
         }
@@ -458,6 +480,10 @@ class TestTransactionApi:
             normalized["solTx"]
             == '{"base64Tx":"AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAA=="}'
         )
+        assert (
+            normalized["tronTx"]
+            == '{"from":"TJRabPrwbZy45sbavfcjinPJC18kjpRTv8","txType":"TRIGGER_SMART_CONTRACT","triggerSmartContractParams":{"contractAddress":"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t","data":"a9059cbb000000000000000000000000d8dA6BF26964aF9D7eEd9e03E53415D37aA960450000000000000000000000000000000000000000000000000000000000f4240","callValue":"0","feeLimitSun":"100000000"},"transferContractParams":{"toAddress":"TJRabPrwbZy45sbavfcjinPJC18kjpRTv8","amount":"1000000"}}'
+        )
 
         assert response is not None
 
@@ -486,6 +512,7 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
             "recv_window": 5000,
             "nonce": "unique-nonce-string",
         }
@@ -493,7 +520,15 @@ class TestTransactionApi:
         expected_response = {
             "code": 0,
             "msg": "success",
-            "data": {"gasLimit": "21000"},
+            "data": {
+                "gasLimit": "21000",
+                "energyRequired": "15000",
+                "bandwidthRequired": "268",
+                "freeEnergy": "14145",
+                "freeBandwidth": "600",
+                "energyFee": "210",
+                "bandwidthFee": "1000",
+            },
             "timestamp": 1748601600000,
             "success": True,
         }
@@ -535,6 +570,7 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
         }
         params["binance_chain_id"] = None
 
@@ -549,6 +585,7 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
         }
         params["evm_tx"] = None
 
@@ -561,10 +598,24 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
         }
         params["sol_tx"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'sol_tx'"):
+            self.client.get_gas_limit(**params)
+
+    def test_get_gas_limit_missing_required_param_tron_tx(self):
+        """Test that get_gas_limit() raises RequiredError when 'tron_tx' is missing."""
+        params = {
+            "binance_chain_id": "binance_chain_id_example",
+            "evm_tx": (),
+            "sol_tx": (),
+            "tron_tx": (),
+        }
+        params["tron_tx"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'tron_tx'"):
             self.client.get_gas_limit(**params)
 
     def test_get_gas_limit_server_error(self):
@@ -574,6 +625,7 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
         }
 
         mock_error = Exception("ResponseError")
@@ -897,6 +949,20 @@ class TestTransactionApi:
             "sol_tx": {
                 "base64_tx": "AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAA=="
             },
+            "tron_tx": {
+                "from": "TJRabPrwbZy45sbavfcjinPJC18kjpRTv8",
+                "tx_type": "TRIGGER_SMART_CONTRACT",
+                "trigger_smart_contract_params": {
+                    "contract_address": "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+                    "data": "a9059cbb000000000000000000000000d8dA6BF26964aF9D7eEd9e03E53415D37aA960450000000000000000000000000000000000000000000000000000000000f4240",
+                    "call_value": "0",
+                    "fee_limit_sun": "100000000",
+                },
+                "transfer_contract_params": {
+                    "to_address": "TJRabPrwbZy45sbavfcjinPJC18kjpRTv8",
+                    "amount": "1000000",
+                },
+            },
         }
 
         expected_response = {
@@ -952,6 +1018,10 @@ class TestTransactionApi:
             normalized["solTx"]
             == '{"base64Tx":"AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAECAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQEAAA=="}'
         )
+        assert (
+            normalized["tronTx"]
+            == '{"from":"TJRabPrwbZy45sbavfcjinPJC18kjpRTv8","txType":"TRIGGER_SMART_CONTRACT","triggerSmartContractParams":{"contractAddress":"TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t","data":"a9059cbb000000000000000000000000d8dA6BF26964aF9D7eEd9e03E53415D37aA960450000000000000000000000000000000000000000000000000000000000f4240","callValue":"0","feeLimitSun":"100000000"},"transferContractParams":{"toAddress":"TJRabPrwbZy45sbavfcjinPJC18kjpRTv8","amount":"1000000"}}'
+        )
 
         assert response is not None
 
@@ -982,6 +1052,7 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
             "recv_window": 5000,
             "nonce": "unique-nonce-string",
         }
@@ -1051,6 +1122,7 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
         }
         params["binance_chain_id"] = None
 
@@ -1065,6 +1137,7 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
         }
         params["evm_tx"] = None
 
@@ -1077,10 +1150,24 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
         }
         params["sol_tx"] = None
 
         with pytest.raises(RequiredError, match="Missing required parameter 'sol_tx'"):
+            self.client.simulate_transactions(**params)
+
+    def test_simulate_transactions_missing_required_param_tron_tx(self):
+        """Test that simulate_transactions() raises RequiredError when 'tron_tx' is missing."""
+        params = {
+            "binance_chain_id": "binance_chain_id_example",
+            "evm_tx": (),
+            "sol_tx": (),
+            "tron_tx": (),
+        }
+        params["tron_tx"] = None
+
+        with pytest.raises(RequiredError, match="Missing required parameter 'tron_tx'"):
             self.client.simulate_transactions(**params)
 
     def test_simulate_transactions_server_error(self):
@@ -1090,6 +1177,7 @@ class TestTransactionApi:
             "binance_chain_id": "binance_chain_id_example",
             "evm_tx": (),
             "sol_tx": (),
+            "tron_tx": (),
         }
 
         mock_error = Exception("ResponseError")

@@ -16,35 +16,36 @@ import re  # noqa: F401
 import json
 
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Set
 from typing_extensions import Self
 
 
-class GetTransactionSupportedChainsResponseDataInner(BaseModel):
+class GetGasLimitRequestTronTxTriggerSmartContractParams(BaseModel):
     """
-    GetTransactionSupportedChainsResponseDataInner
+    Required when `txType=TRIGGER_SMART_CONTRACT`.
     """  # noqa: E501
 
-    binance_chain_id: Optional[StrictStr] = Field(
+    contract_address: StrictStr = Field(
+        description="Smart-contract address (base58check).", alias="contractAddress"
+    )
+    data: StrictStr = Field(description="ABI-encoded calldata (hex, no `0x` prefix).")
+    call_value: StrictInt = Field(
+        description="Amount of TRX (in sun) to attach as `call_value`.",
+        alias="callValue",
+    )
+    fee_limit_sun: Optional[StrictInt] = Field(
         default=None,
-        description='Unique chain identifier (follows EIP-155 chainId for EVM chains; e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana, "CT_195"=Tron).',
-        alias="binanceChainId",
-    )
-    name: Optional[StrictStr] = Field(default=None, description="Full chain name.")
-    short_name: Optional[StrictStr] = Field(
-        default=None, description="Short chain name / ticker.", alias="shortName"
-    )
-    logo_url: Optional[StrictStr] = Field(
-        default=None, description="Chain logo image URL.", alias="logoUrl"
+        description="Optional max fee the caller is willing to pay (in sun). If omitted, server default applies.",
+        alias="feeLimitSun",
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "binanceChainId",
-        "name",
-        "shortName",
-        "logoUrl",
+        "contractAddress",
+        "data",
+        "callValue",
+        "feeLimitSun",
     ]
 
     model_config = ConfigDict(
@@ -68,7 +69,7 @@ class GetTransactionSupportedChainsResponseDataInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetTransactionSupportedChainsResponseDataInner from a JSON string"""
+        """Create an instance of GetGasLimitRequestTronTxTriggerSmartContractParams from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -98,11 +99,16 @@ class GetTransactionSupportedChainsResponseDataInner(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
+        # set to None if fee_limit_sun (nullable) is None
+        # and model_fields_set contains the field
+        if self.fee_limit_sun is None and "fee_limit_sun" in self.model_fields_set:
+            _dict["feeLimitSun"] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetTransactionSupportedChainsResponseDataInner from a dict"""
+        """Create an instance of GetGasLimitRequestTronTxTriggerSmartContractParams from a dict"""
         if obj is None:
             return None
 
@@ -111,10 +117,10 @@ class GetTransactionSupportedChainsResponseDataInner(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "binanceChainId": obj.get("binanceChainId"),
-                "name": obj.get("name"),
-                "shortName": obj.get("shortName"),
-                "logoUrl": obj.get("logoUrl"),
+                "contractAddress": obj.get("contractAddress"),
+                "data": obj.get("data"),
+                "callValue": obj.get("callValue"),
+                "feeLimitSun": obj.get("feeLimitSun"),
             }
         )
         # store additional fields in additional_properties
