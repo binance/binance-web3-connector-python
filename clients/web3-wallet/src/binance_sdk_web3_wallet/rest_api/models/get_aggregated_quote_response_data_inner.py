@@ -108,6 +108,21 @@ class GetAggregatedQuoteResponseDataInner(BaseModel):
         description="Whether this route has the highest `toTokenAmount` among all routes returned in this response. At most one route per response has `isBest=true`.",
         alias="isBest",
     )
+    fee_amount: Optional[StrictStr] = Field(
+        default=None,
+        description="Fee amount deducted for this route (smallest unit, integer string). Only populated when the request enabled the custom fee (`feePercent` + `feeSource` both present); `null` otherwise. `FROM_TOKEN` direction = `originalFromCoinAmount × feePercent/100` (HALF_UP); `TO_TOKEN` direction = `originalToCoinAmount × feePercent/100` (HALF_DOWN).",
+        alias="feeAmount",
+    )
+    fee_token: Optional[StrictStr] = Field(
+        default=None,
+        description="Contract address of the token in which the fee is denominated. `FROM_TOKEN` direction = sell-token address; `TO_TOKEN` direction = buy-token address. `null` when the custom fee is not enabled.",
+        alias="feeToken",
+    )
+    actual_swap_amount: Optional[StrictStr] = Field(
+        default=None,
+        description="Actual amount participating in the DEX swap (smallest unit, integer string). `FROM_TOKEN` direction = net amount after fee deduction (`fromTokenAmount − feeAmount`, i.e. the amountIn sent to the DEX); `TO_TOKEN` direction = original input amount (fee is taken from the output side, so the full input participates in the swap). `null` when the custom fee is not enabled.",
+        alias="actualSwapAmount",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "quoteId",
@@ -125,6 +140,9 @@ class GetAggregatedQuoteResponseDataInner(BaseModel):
         "executionMode",
         "approveTarget",
         "isBest",
+        "feeAmount",
+        "feeToken",
+        "actualSwapAmount",
     ]
 
     model_config = ConfigDict(
@@ -217,6 +235,24 @@ class GetAggregatedQuoteResponseDataInner(BaseModel):
         if self.approve_target is None and "approve_target" in self.model_fields_set:
             _dict["approveTarget"] = None
 
+        # set to None if fee_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.fee_amount is None and "fee_amount" in self.model_fields_set:
+            _dict["feeAmount"] = None
+
+        # set to None if fee_token (nullable) is None
+        # and model_fields_set contains the field
+        if self.fee_token is None and "fee_token" in self.model_fields_set:
+            _dict["feeToken"] = None
+
+        # set to None if actual_swap_amount (nullable) is None
+        # and model_fields_set contains the field
+        if (
+            self.actual_swap_amount is None
+            and "actual_swap_amount" in self.model_fields_set
+        ):
+            _dict["actualSwapAmount"] = None
+
         return _dict
 
     @classmethod
@@ -264,6 +300,9 @@ class GetAggregatedQuoteResponseDataInner(BaseModel):
                 "executionMode": obj.get("executionMode"),
                 "approveTarget": obj.get("approveTarget"),
                 "isBest": obj.get("isBest"),
+                "feeAmount": obj.get("feeAmount"),
+                "feeToken": obj.get("feeToken"),
+                "actualSwapAmount": obj.get("actualSwapAmount"),
             }
         )
         # store additional fields in additional_properties

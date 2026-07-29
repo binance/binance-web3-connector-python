@@ -166,6 +166,11 @@ class BuildSwapTransactionAutoSlippageEnum(Enum):
     FALSE = "false"
 
 
+class GetAggregatedQuoteFeeSourceEnum(Enum):
+    FROM_TOKEN = "FROM_TOKEN"
+    TO_TOKEN = "TO_TOKEN"
+
+
 class QuoteAndBuildSwapTransactionVendorEnum(Enum):
     LiquidMesh = "LiquidMesh"
 

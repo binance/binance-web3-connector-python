@@ -83,6 +83,21 @@ class BuildSolanaSwapInstructionsResponseDataRouterResult(BaseModel):
     to_token: Optional[BuildSolanaSwapInstructionsResponseDataRouterResultToToken] = (
         Field(default=None, alias="toToken")
     )
+    fee_amount: Optional[StrictStr] = Field(
+        default=None,
+        description="Fee amount deducted for this swap (smallest unit, integer string). Only populated when the request enabled the custom fee; `null` otherwise. `FROM_TOKEN` direction = `originalFromCoinAmount × feePercent/100` (HALF_UP); `TO_TOKEN` direction = `originalToCoinAmount × feePercent/100` (HALF_DOWN).",
+        alias="feeAmount",
+    )
+    fee_token: Optional[StrictStr] = Field(
+        default=None,
+        description="Contract address of the token in which the fee is denominated. `FROM_TOKEN` direction = sell-token address; `TO_TOKEN` direction = buy-token address. `null` when the custom fee is not enabled.",
+        alias="feeToken",
+    )
+    actual_swap_amount: Optional[StrictStr] = Field(
+        default=None,
+        description="Actual amount participating in the DEX swap (smallest unit, integer string). `FROM_TOKEN` direction = net amount after fee deduction (`fromTokenAmount − feeAmount`); `TO_TOKEN` direction = original input amount (fee is taken from the output side). `null` when the custom fee is not enabled.",
+        alias="actualSwapAmount",
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
         "binanceChainId",
@@ -96,6 +111,9 @@ class BuildSolanaSwapInstructionsResponseDataRouterResult(BaseModel):
         "dexRouterList",
         "fromToken",
         "toToken",
+        "feeAmount",
+        "feeToken",
+        "actualSwapAmount",
     ]
 
     model_config = ConfigDict(
@@ -175,6 +193,24 @@ class BuildSolanaSwapInstructionsResponseDataRouterResult(BaseModel):
         ):
             _dict["estimateGasFee"] = None
 
+        # set to None if fee_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.fee_amount is None and "fee_amount" in self.model_fields_set:
+            _dict["feeAmount"] = None
+
+        # set to None if fee_token (nullable) is None
+        # and model_fields_set contains the field
+        if self.fee_token is None and "fee_token" in self.model_fields_set:
+            _dict["feeToken"] = None
+
+        # set to None if actual_swap_amount (nullable) is None
+        # and model_fields_set contains the field
+        if (
+            self.actual_swap_amount is None
+            and "actual_swap_amount" in self.model_fields_set
+        ):
+            _dict["actualSwapAmount"] = None
+
         return _dict
 
     @classmethod
@@ -220,6 +256,9 @@ class BuildSolanaSwapInstructionsResponseDataRouterResult(BaseModel):
                     if obj.get("toToken") is not None
                     else None
                 ),
+                "feeAmount": obj.get("feeAmount"),
+                "feeToken": obj.get("feeToken"),
+                "actualSwapAmount": obj.get("actualSwapAmount"),
             }
         )
         # store additional fields in additional_properties
