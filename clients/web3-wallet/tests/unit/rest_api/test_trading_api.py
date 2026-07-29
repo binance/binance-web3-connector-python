@@ -29,52 +29,33 @@ from binance_sdk_web3_wallet.rest_api.models import GetRfqOrderStatusResponse
 from binance_sdk_web3_wallet.rest_api.models import GetTransactionStatusResponse
 from binance_sdk_web3_wallet.rest_api.models import QuoteAndBuildSwapTransactionResponse
 from binance_sdk_web3_wallet.rest_api.models import SubmitRfqOrderResponse
-
-
 from binance_sdk_web3_wallet.rest_api.models import (
     BuildSolanaSwapInstructionsBinanceChainIdEnum,
 )
-
-
 from binance_sdk_web3_wallet.rest_api.models import (
     BuildSolanaSwapInstructionsAutoSlippageEnum,
 )
-
-
 from binance_sdk_web3_wallet.rest_api.models import (
     BuildSolanaSwapInstructionsGasLevelEnum,
 )
-
-
 from binance_sdk_web3_wallet.rest_api.models import (
     BuildSwapTransactionApproveTransactionEnum,
 )
-
-
 from binance_sdk_web3_wallet.rest_api.models import BuildSwapTransactionGasLevelEnum
-
 from binance_sdk_web3_wallet.rest_api.models import BuildSwapTransactionAutoSlippageEnum
-
-
+from binance_sdk_web3_wallet.rest_api.models import GetAggregatedQuoteFeeSourceEnum
 from binance_sdk_web3_wallet.rest_api.models import (
     QuoteAndBuildSwapTransactionVendorEnum,
 )
-
-
 from binance_sdk_web3_wallet.rest_api.models import (
     QuoteAndBuildSwapTransactionApproveTransactionEnum,
 )
-
-
 from binance_sdk_web3_wallet.rest_api.models import (
     QuoteAndBuildSwapTransactionGasLevelEnum,
 )
-
 from binance_sdk_web3_wallet.rest_api.models import (
     QuoteAndBuildSwapTransactionAutoSlippageEnum,
 )
-
-
 from binance_sdk_web3_wallet.rest_api.models import SubmitRfqOrderVendorEnum
 
 
@@ -172,6 +153,9 @@ class TestTradingApi:
                         "tokenSymbol": "WSOL",
                         "decimal": "9",
                     },
+                    "feeAmount": "15000",
+                    "feeToken": "So11111111111111111111111111111111111111112",
+                    "actualSwapAmount": "985000",
                 },
                 "tx": {
                     "from": "J5CBzXpcYn6WR2JBah8zU4Yxct985CAFGwXRcFaX2pbS",
@@ -268,6 +252,9 @@ class TestTradingApi:
             "compute_unit_price": "1000",
             "gas_level": BuildSolanaSwapInstructionsGasLevelEnum["slow"].value,
             "tips": "0.001",
+            "fee_percent": "1.5",
+            "from_token_referrer_wallet_address": "J5CBzXpcYn6WR2JBah8zU4Yxct985CAFGwXRcFaX2pbS",
+            "to_token_referrer_wallet_address": "J5CBzXpcYn6WR2JBah8zU4Yxct985CAFGwXRcFaX2pbS",
         }
 
         expected_response = {
@@ -324,6 +311,9 @@ class TestTradingApi:
                         "tokenSymbol": "WSOL",
                         "decimal": "9",
                     },
+                    "feeAmount": "15000",
+                    "feeToken": "So11111111111111111111111111111111111111112",
+                    "actualSwapAmount": "985000",
                 },
                 "tx": {
                     "from": "J5CBzXpcYn6WR2JBah8zU4Yxct985CAFGwXRcFaX2pbS",
@@ -600,6 +590,9 @@ class TestTradingApi:
                         "isHoneyPot": False,
                         "taxRate": "0",
                     },
+                    "feeAmount": "15000",
+                    "feeToken": "0x55d398326f99059fF775485246999027B3197955",
+                    "actualSwapAmount": "985000",
                 },
                 "tx": {
                     "from": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
@@ -708,6 +701,9 @@ class TestTradingApi:
             "compute_unit_limit": "1400000",
             "compute_unit_price": "1000",
             "tips": "0.001",
+            "fee_percent": "1.5",
+            "from_token_referrer_wallet_address": "0xCbF2B6E6e3D7e9e4e4e4e4e4e4e4e4e4e4e4e4e4",
+            "to_token_referrer_wallet_address": "0xCbF2B6E6e3D7e9e4e4e4e4e4e4e4e4e4e4e4e4e4",
         }
 
         expected_response = {
@@ -757,6 +753,9 @@ class TestTradingApi:
                         "isHoneyPot": False,
                         "taxRate": "0",
                     },
+                    "feeAmount": "15000",
+                    "feeToken": "0x55d398326f99059fF775485246999027B3197955",
+                    "actualSwapAmount": "985000",
                 },
                 "tx": {
                     "from": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
@@ -998,6 +997,9 @@ class TestTradingApi:
                     "executionMode": "SWAP",
                     "approveTarget": "0xc67879F4065d3B9fe1C09EE990B891Aa8E3a4c2f",
                     "isBest": True,
+                    "feeAmount": "15000",
+                    "feeToken": "0x55d398326f99059fF775485246999027B3197955",
+                    "actualSwapAmount": "985000",
                 }
             ],
             "timestamp": 1748601600000,
@@ -1063,6 +1065,8 @@ class TestTradingApi:
             "recv_window": 5000,
             "nonce": "unique-nonce-string",
             "user_wallet_address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+            "fee_percent": "1.5",
+            "fee_source": GetAggregatedQuoteFeeSourceEnum["FROM_TOKEN"].value,
         }
 
         expected_response = {
@@ -1116,6 +1120,9 @@ class TestTradingApi:
                     "executionMode": "SWAP",
                     "approveTarget": "0xc67879F4065d3B9fe1C09EE990B891Aa8E3a4c2f",
                     "isBest": True,
+                    "feeAmount": "15000",
+                    "feeToken": "0x55d398326f99059fF775485246999027B3197955",
+                    "actualSwapAmount": "985000",
                 }
             ],
             "timestamp": 1748601600000,
@@ -1964,6 +1971,9 @@ class TestTradingApi:
                         "isHoneyPot": False,
                         "taxRate": "0",
                     },
+                    "feeAmount": "15000",
+                    "feeToken": "0x55d398326f99059fF775485246999027B3197955",
+                    "actualSwapAmount": "985000",
                 },
                 "tx": {
                     "from": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
@@ -2079,6 +2089,9 @@ class TestTradingApi:
             "compute_unit_limit": "1400000",
             "compute_unit_price": "1000",
             "tips": "0.001",
+            "fee_percent": "1.5",
+            "from_token_referrer_wallet_address": "0xCbF2B6E6e3D7e9e4e4e4e4e4e4e4e4e4e4e4e4e4",
+            "to_token_referrer_wallet_address": "0xCbF2B6E6e3D7e9e4e4e4e4e4e4e4e4e4e4e4e4e4",
         }
 
         expected_response = {
@@ -2128,6 +2141,9 @@ class TestTradingApi:
                         "isHoneyPot": False,
                         "taxRate": "0",
                     },
+                    "feeAmount": "15000",
+                    "feeToken": "0x55d398326f99059fF775485246999027B3197955",
+                    "actualSwapAmount": "985000",
                 },
                 "tx": {
                     "from": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",

@@ -531,6 +531,7 @@ from .enums import BuildSwapTransactionGasLevelEnum as BuildSwapTransactionGasLe
 from .enums import (
     BuildSwapTransactionAutoSlippageEnum as BuildSwapTransactionAutoSlippageEnum,
 )
+from .enums import GetAggregatedQuoteFeeSourceEnum as GetAggregatedQuoteFeeSourceEnum
 from .enums import (
     QuoteAndBuildSwapTransactionVendorEnum as QuoteAndBuildSwapTransactionVendorEnum,
 )

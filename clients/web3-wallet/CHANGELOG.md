@@ -1,5 +1,51 @@
 # Changelog
 
+## 5.0.0 - 2026-07-29
+
+### Changed (8)
+
+- Added parameter `fee_percent`
+  - affected methods:
+    - `get_aggregated_quote()` (`GET /api/v1/dex/aggregator/quote`)
+    - `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`)
+    - `build_swap_transaction()` (`GET /api/v1/dex/aggregator/swap`)
+    - `build_solana_swap_instructions()` (`GET /api/v1/dex/aggregator/swap-instruction`)
+- Added parameter `fee_source`
+  - affected methods:
+    - `get_aggregated_quote()` (`GET /api/v1/dex/aggregator/quote`)
+- Added parameter `from_token_referrer_wallet_address`
+  - affected methods:
+    - `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`)
+    - `build_swap_transaction()` (`GET /api/v1/dex/aggregator/swap`)
+    - `build_solana_swap_instructions()` (`GET /api/v1/dex/aggregator/swap-instruction`)
+- Added parameter `to_token_referrer_wallet_address`
+  - affected methods:
+    - `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`)
+    - `build_swap_transaction()` (`GET /api/v1/dex/aggregator/swap`)
+    - `build_solana_swap_instructions()` (`GET /api/v1/dex/aggregator/swap-instruction`)
+- Modified response for `get_aggregated_quote()` (`GET /api/v1/dex/aggregator/quote`):
+  - `data`.items: property `actual_swap_amount` added
+  - `data`.items: property `fee_amount` added
+  - `data`.items: property `fee_token` added
+  - `data`.items: item property `actual_swap_amount` added
+  - `data`.items: item property `fee_amount` added
+  - `data`.items: item property `fee_token` added
+
+- Modified response for `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`):
+  - `data`.`routerResult`: property `actual_swap_amount` added
+  - `data`.`routerResult`: property `fee_amount` added
+  - `data`.`routerResult`: property `fee_token` added
+
+- Modified response for `build_swap_transaction()` (`GET /api/v1/dex/aggregator/swap`):
+  - `data`.`routerResult`: property `actual_swap_amount` added
+  - `data`.`routerResult`: property `fee_amount` added
+  - `data`.`routerResult`: property `fee_token` added
+
+- Modified response for `buildSolanaSwapInstructions()` (`GET /api/v1/dex/aggregator/swap-instruction`):
+  - `data`.`routerResult`: property `actual_swap_amount` added
+  - `data`.`routerResult`: property `fee_amount` added
+  - `data`.`routerResult`: property `fee_token` added
+
 ## 4.0.0 - 2026-07-28
 
 ### Changed (2)
