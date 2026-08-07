@@ -1,5 +1,19 @@
 # Changelog
 
+## 6.0.0 - 2026-08-07
+
+### Added (1)
+
+- `get_latest_block_height()` (`GET /api/v1/dex/pre-transaction/block-height`)
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.2.0`
+- Updated Dependencies
+- Added parameter `vendor`
+  - affected methods:
+    - `get_aggregated_quote()` (`GET /api/v1/dex/aggregator/quote`)
+
 ## 5.0.0 - 2026-07-29
 
 ### Changed (8)

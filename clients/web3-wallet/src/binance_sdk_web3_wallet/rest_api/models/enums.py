@@ -166,6 +166,12 @@ class BuildSwapTransactionAutoSlippageEnum(Enum):
     FALSE = "false"
 
 
+class GetAggregatedQuoteVendorEnum(Enum):
+    LiquidMesh = "LiquidMesh"
+    Pancake = "Pancake"
+    Jupiter = "Jupiter"
+
+
 class GetAggregatedQuoteFeeSourceEnum(Enum):
     FROM_TOKEN = "FROM_TOKEN"
     TO_TOKEN = "TO_TOKEN"

@@ -31,6 +31,7 @@ from ..models import BuildSolanaSwapInstructionsGasLevelEnum
 from ..models import BuildSwapTransactionApproveTransactionEnum
 from ..models import BuildSwapTransactionGasLevelEnum
 from ..models import BuildSwapTransactionAutoSlippageEnum
+from ..models import GetAggregatedQuoteVendorEnum
 from ..models import GetAggregatedQuoteFeeSourceEnum
 from ..models import QuoteAndBuildSwapTransactionVendorEnum
 from ..models import QuoteAndBuildSwapTransactionApproveTransactionEnum
@@ -358,6 +359,7 @@ class TradingApi:
         to_token_address: Union[str, None],
         recv_window: Optional[int] = None,
         nonce: Optional[str] = None,
+        vendor: Optional[GetAggregatedQuoteVendorEnum] = None,
         user_wallet_address: Optional[str] = None,
         fee_percent: Optional[str] = None,
         fee_source: Optional[GetAggregatedQuoteFeeSourceEnum] = None,
@@ -376,6 +378,7 @@ class TradingApi:
                     to_token_address (Union[str, None]): Buy-token contract address. Must differ from `fromTokenAddress`.
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
+                    vendor (Optional[GetAggregatedQuoteVendorEnum] = None): Optional vendor selector. When provided, only the specified vendor is queried through the single-vendor fast path; the request bypasses the multi-vendor dual-window, early-return, and price-check logic. Values are case-sensitive and must be one of `LiquidMesh`, `Pancake`, or `Jupiter`. The vendor must also support the requested chain. An unsupported value or unavailable vendor/chain returns `PARAM_ERROR` (40001). When omitted, the API queries all applicable vendors in parallel and returns the aggregated routes.
                     user_wallet_address (Optional[str] = None): User wallet address. Required when quoting RFQ routes (equity / RWA tokens such as Ondo and BStock). This address is used as the receiver in the RFQ order and must match the wallet that signs `rfq.typedDataToSign` in the subsequent `/swap` call.
                     fee_percent (Optional[str] = None): Custom fee (referral fee / Add Fee) percentage as a decimal string. Must be paired with `feeSource` — either both present or both absent.
 
@@ -422,6 +425,7 @@ class TradingApi:
             "amount": amount,
             "from_token_address": from_token_address,
             "to_token_address": to_token_address,
+            "vendor": vendor,
             "user_wallet_address": user_wallet_address,
             "fee_percent": fee_percent,
             "fee_source": fee_source,

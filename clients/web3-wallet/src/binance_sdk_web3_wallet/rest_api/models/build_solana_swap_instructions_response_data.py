@@ -15,7 +15,6 @@ import pprint
 import re  # noqa: F401
 import json
 
-
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_web3_wallet.rest_api.models.build_solana_swap_instructions_response_data_instruction_lists_inner import (

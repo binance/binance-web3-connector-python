@@ -24,6 +24,7 @@ from binance_sdk_web3_wallet.rest_api.models import BroadcastTransactionsRespons
 from binance_sdk_web3_wallet.rest_api.models import GetBroadcastOrdersResponse
 from binance_sdk_web3_wallet.rest_api.models import GetGasLimitResponse
 from binance_sdk_web3_wallet.rest_api.models import GetGasPriceResponse
+from binance_sdk_web3_wallet.rest_api.models import GetLatestBlockHeightResponse
 from binance_sdk_web3_wallet.rest_api.models import (
     GetTransactionSupportedChainsResponse,
 )
@@ -806,6 +807,135 @@ class TestTransactionApi:
 
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_gas_price(**params)
+
+    @patch("binance_common.utils.web3_signature")
+    def test_get_latest_block_height_success(self, mock_get_signature):
+        """Test get_latest_block_height() successfully with required parameters only."""
+
+        params = {
+            "binance_chain_id": "1",
+        }
+
+        expected_response = {
+            "code": 0,
+            "msg": "success",
+            "data": {"binanceChainId": "1", "blockHeight": 21000000},
+            "timestamp": 1748601600000,
+            "success": True,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_latest_block_height(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+        parsed_params = parse_qs(request_kwargs["params"])
+        camel_case_params = {snake_to_camel(k): v for k, v in params.items()}
+        normalized = normalize_query_values(parsed_params, camel_case_params)
+
+        self.mock_session.request.assert_called_once()
+        mock_get_signature.assert_called_once()
+
+        assert "url" in request_kwargs
+        assert "/api/v1/dex/pre-transaction/block-height" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+        assert normalized["binanceChainId"] == "1"
+
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetLatestBlockHeightResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetLatestBlockHeightResponse, "from_dict"):
+            expected = GetLatestBlockHeightResponse.from_dict(expected_response)
+        else:
+            expected = GetLatestBlockHeightResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    @patch("binance_common.utils.web3_signature")
+    def test_get_latest_block_height_success_with_optional_params(
+        self, mock_get_signature
+    ):
+        """Test get_latest_block_height() successfully with optional parameters."""
+
+        params = {
+            "binance_chain_id": "1",
+            "recv_window": 5000,
+            "nonce": "unique-nonce-string",
+        }
+
+        expected_response = {
+            "code": 0,
+            "msg": "success",
+            "data": {"binanceChainId": "1", "blockHeight": 21000000},
+            "timestamp": 1748601600000,
+            "success": True,
+        }
+        mock_get_signature.return_value = "mocked_signature"
+        self.set_mock_response(expected_response)
+
+        response = self.client.get_latest_block_height(**params)
+
+        actual_call_args = self.mock_session.request.call_args
+        request_kwargs = actual_call_args.kwargs
+
+        assert "url" in request_kwargs
+        assert "/api/v1/dex/pre-transaction/block-height" in request_kwargs["url"]
+        assert request_kwargs["method"] == "GET"
+
+        self.mock_session.request.assert_called_once()
+        assert response is not None
+
+        is_list = isinstance(expected_response, list)
+        is_flat_list = (
+            is_list and not isinstance(expected_response[0], list) if is_list else False
+        )
+        is_oneof = is_one_of_model(GetLatestBlockHeightResponse)
+
+        if is_list and not is_flat_list:
+            expected = expected_response
+        elif is_oneof or is_list or hasattr(GetLatestBlockHeightResponse, "from_dict"):
+            expected = GetLatestBlockHeightResponse.from_dict(expected_response)
+        else:
+            expected = GetLatestBlockHeightResponse.model_validate_json(
+                json.dumps(expected_response)
+            )
+
+        assert response.data() == expected
+
+    def test_get_latest_block_height_missing_required_param_binance_chain_id(self):
+        """Test that get_latest_block_height() raises RequiredError when 'binance_chain_id' is missing."""
+        params = {
+            "binance_chain_id": "1",
+        }
+        params["binance_chain_id"] = None
+
+        with pytest.raises(
+            RequiredError, match="Missing required parameter 'binance_chain_id'"
+        ):
+            self.client.get_latest_block_height(**params)
+
+    def test_get_latest_block_height_server_error(self):
+        """Test that get_latest_block_height() raises an error when the server returns an error."""
+
+        params = {
+            "binance_chain_id": "1",
+        }
+
+        mock_error = Exception("ResponseError")
+        self.client.get_latest_block_height = MagicMock(side_effect=mock_error)
+
+        with pytest.raises(Exception, match="ResponseError"):
+            self.client.get_latest_block_height(**params)
 
     @patch("binance_common.utils.web3_signature")
     def test_get_transaction_supported_chains_success(self, mock_get_signature):
