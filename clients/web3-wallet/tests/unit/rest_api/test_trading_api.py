@@ -43,6 +43,7 @@ from binance_sdk_web3_wallet.rest_api.models import (
 )
 from binance_sdk_web3_wallet.rest_api.models import BuildSwapTransactionGasLevelEnum
 from binance_sdk_web3_wallet.rest_api.models import BuildSwapTransactionAutoSlippageEnum
+from binance_sdk_web3_wallet.rest_api.models import GetAggregatedQuoteVendorEnum
 from binance_sdk_web3_wallet.rest_api.models import GetAggregatedQuoteFeeSourceEnum
 from binance_sdk_web3_wallet.rest_api.models import (
     QuoteAndBuildSwapTransactionVendorEnum,
@@ -1064,6 +1065,7 @@ class TestTradingApi:
             "to_token_address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
             "recv_window": 5000,
             "nonce": "unique-nonce-string",
+            "vendor": GetAggregatedQuoteVendorEnum["LiquidMesh"].value,
             "user_wallet_address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
             "fee_percent": "1.5",
             "fee_source": GetAggregatedQuoteFeeSourceEnum["FROM_TOKEN"].value,

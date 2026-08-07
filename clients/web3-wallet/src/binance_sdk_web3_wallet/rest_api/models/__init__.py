@@ -230,6 +230,12 @@ from .get_hot_token_list_response_data import (
 from .get_hot_token_list_response_data_items_inner import (
     GetHotTokenListResponseDataItemsInner as GetHotTokenListResponseDataItemsInner,
 )
+from .get_latest_block_height_response import (
+    GetLatestBlockHeightResponse as GetLatestBlockHeightResponse,
+)
+from .get_latest_block_height_response_data import (
+    GetLatestBlockHeightResponseData as GetLatestBlockHeightResponseData,
+)
 from .get_leaderboard_response import GetLeaderboardResponse as GetLeaderboardResponse
 from .get_leaderboard_response_data import (
     GetLeaderboardResponseData as GetLeaderboardResponseData,
@@ -531,6 +537,7 @@ from .enums import BuildSwapTransactionGasLevelEnum as BuildSwapTransactionGasLe
 from .enums import (
     BuildSwapTransactionAutoSlippageEnum as BuildSwapTransactionAutoSlippageEnum,
 )
+from .enums import GetAggregatedQuoteVendorEnum as GetAggregatedQuoteVendorEnum
 from .enums import GetAggregatedQuoteFeeSourceEnum as GetAggregatedQuoteFeeSourceEnum
 from .enums import (
     QuoteAndBuildSwapTransactionVendorEnum as QuoteAndBuildSwapTransactionVendorEnum,

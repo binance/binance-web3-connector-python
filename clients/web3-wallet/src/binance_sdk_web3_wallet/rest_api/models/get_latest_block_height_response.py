@@ -17,30 +17,31 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_web3_wallet.rest_api.models.get_rwa_token_price_response_data_inner import (
-    GetRwaTokenPriceResponseDataInner,
+from binance_sdk_web3_wallet.rest_api.models.get_latest_block_height_response_data import (
+    GetLatestBlockHeightResponseData,
 )
 from typing import Set
 from typing_extensions import Self
 
 
-class GetRwaTokenPriceResponse(BaseModel):
+class GetLatestBlockHeightResponse(BaseModel):
     """
-    GetRwaTokenPriceResponse
+    GetLatestBlockHeightResponse
     """  # noqa: E501
 
     code: Optional[StrictInt] = Field(
-        default=None, description="Business status code. 0 indicates success."
+        default=None,
+        description="Business status code. 0 indicates success; any non-zero value indicates a business error.",
     )
-    msg: Optional[StrictStr] = Field(default=None, description="Status message.")
-    data: Optional[List[GetRwaTokenPriceResponseDataInner]] = Field(
-        default=None, description="List of token price data."
+    msg: Optional[StrictStr] = Field(
+        default=None, description="Status description message."
     )
+    data: Optional[GetLatestBlockHeightResponseData] = None
     timestamp: Optional[StrictInt] = Field(
-        default=None, description="Server response time, Unix millisecond timestamp."
+        default=None, description="Server response timestamp in milliseconds."
     )
     success: Optional[StrictBool] = Field(
-        default=None, description="Whether the request was successful."
+        default=None, description="Convenience flag derived from `code == 0`."
     )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["code", "msg", "data", "timestamp", "success"]
@@ -66,7 +67,7 @@ class GetRwaTokenPriceResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetRwaTokenPriceResponse from a JSON string"""
+        """Create an instance of GetLatestBlockHeightResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -91,13 +92,9 @@ class GetRwaTokenPriceResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in data (list)
-        _items = []
+        # override the default output from pydantic by calling `to_dict()` of data
         if self.data:
-            for _item_data in self.data:
-                if _item_data:
-                    _items.append(_item_data.to_dict())
-            _dict["data"] = _items
+            _dict["data"] = self.data.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
@@ -107,7 +104,7 @@ class GetRwaTokenPriceResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetRwaTokenPriceResponse from a dict"""
+        """Create an instance of GetLatestBlockHeightResponse from a dict"""
         if obj is None:
             return None
 
@@ -119,10 +116,7 @@ class GetRwaTokenPriceResponse(BaseModel):
                 "code": obj.get("code"),
                 "msg": obj.get("msg"),
                 "data": (
-                    [
-                        GetRwaTokenPriceResponseDataInner.from_dict(_item)
-                        for _item in obj["data"]
-                    ]
+                    GetLatestBlockHeightResponseData.from_dict(obj["data"])
                     if obj.get("data") is not None
                     else None
                 ),

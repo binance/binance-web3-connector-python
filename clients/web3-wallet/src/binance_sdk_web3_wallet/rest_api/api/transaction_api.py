@@ -20,6 +20,7 @@ from ..models import BroadcastTransactionsResponse
 from ..models import GetBroadcastOrdersResponse
 from ..models import GetGasLimitResponse
 from ..models import GetGasPriceResponse
+from ..models import GetLatestBlockHeightResponse
 from ..models import GetTransactionSupportedChainsResponse
 from ..models import SimulateTransactionsResponse
 from ..models import GetGasLimitRequestEvmTx
@@ -319,6 +320,58 @@ class TransactionApi:
             body=body,
             time_unit=self._configuration.time_unit,
             response_model=GetGasPriceResponse,
+            web3_headers=headers,
+            is_signed=True,
+            signer=self._signer,
+        )
+
+    def get_latest_block_height(
+        self,
+        binance_chain_id: Union[str, None],
+        recv_window: Optional[int] = None,
+        nonce: Optional[str] = None,
+    ) -> ApiResponse[GetLatestBlockHeightResponse]:
+        """
+        Get Latest Block Height
+        GET /api/v1/dex/pre-transaction/block-height
+        https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/transaction-api#get-latest-block-height
+
+        Return the latest block height that the Binance Web3 node has synced to for the specified chain. Callers can use this to monitor node sync progress for risk control and detect when the node lags behind the canonical chain head.
+
+        Args:
+            binance_chain_id (Union[str, None]): Unique chain identifier (e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana, "CT_195"=Tron).
+            recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
+            nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
+
+        Returns:
+            ApiResponse[GetLatestBlockHeightResponse]
+
+        Raises:
+            RequiredError: If a required parameter is missing.
+
+        """
+
+        if binance_chain_id is None:
+            raise RequiredError(
+                field="binance_chain_id",
+                error_message="Missing required parameter 'binance_chain_id'",
+            )
+
+        body = {}
+        headers = {"recv_window": recv_window, "nonce": nonce}
+        payload = {
+            "binance_chain_id": binance_chain_id,
+        }
+
+        return send_request(
+            self._session,
+            self._configuration,
+            method="GET",
+            path="/api/v1/dex/pre-transaction/block-height",
+            payload=payload,
+            body=body,
+            time_unit=self._configuration.time_unit,
+            response_model=GetLatestBlockHeightResponse,
             web3_headers=headers,
             is_signed=True,
             signer=self._signer,

@@ -15,7 +15,6 @@ import pprint
 import re  # noqa: F401
 import json
 
-
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from binance_sdk_web3_wallet.rest_api.models.get_rwa_underlying_info_response_data_company_info import (
