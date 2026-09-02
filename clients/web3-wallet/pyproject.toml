@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "binance-web3-wallet"
-version = "6.0.0"
+version = "6.1.0"
 description = "Official Binance Web3Wallet Connector - A lightweight library that provides a convenient interface to Binance's Web3Wallet REST API"
 authors = ["Binance"]
 license = "MIT"

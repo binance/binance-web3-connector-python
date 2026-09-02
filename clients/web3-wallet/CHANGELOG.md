@@ -1,5 +1,31 @@
 # Changelog
 
+## 6.1.0 - 2026-09-02
+
+### Added (17)
+
+- `get_b402_supported_configurations_v1()` (`POST /api/v1/b402/supported`)
+- `get_b402_supported_configurations_v2()` (`POST /api/v2/b402/supported`)
+- `verify_b402_payment_v1()` (`POST /api/v1/b402/verify`)
+- `verify_b402_payment_v2()` (`POST /api/v2/b402/verify`)
+- `settle_b402_payment_v1()` (`POST /api/v1/b402/settle`)
+- `settle_b402_payment_v2()` (`POST /api/v2/b402/settle`)
+- `get_de_fi_positions()` (`POST /api/v1/defi/data/position/list`)
+- `list_de_fi_investments()` (`POST /api/v1/defi/data/investment/list`)
+- `get_investment_detail()` (`POST /api/v1/defi/data/investment/detail`)
+- `list_de_fi_protocols()` (`POST /api/v1/defi/data/protocol/list`)
+- `get_protocol_detail()` (`POST /api/v1/defi/data/protocol/detail`)
+- `build_de_fi_deposit_transaction()` (`POST /api/v1/defi/transaction/deposit`)
+- `build_de_fi_redeem_transaction()` (`POST /api/v1/defi/transaction/redeem`)
+- `build_de_fi_claim_transaction()` (`POST /api/v1/defi/transaction/claim`)
+- `build_lp_add_transaction()` (`POST /api/v1/defi/transaction/lp-add`)
+- `build_lp_remove_transaction()` (`POST /api/v1/defi/transaction/lp-remove`)
+- `calculate_lp_add_paired_amounts()` (`POST /api/v1/defi/transaction/lp-add/calculate`)
+
+### Changed (1)
+
+- Added `B402PaymentsApi`, `DefiDataApi` and `DefiTransactionApi` modules
+
 ## 6.0.0 - 2026-08-07
 
 ### Added (1)
