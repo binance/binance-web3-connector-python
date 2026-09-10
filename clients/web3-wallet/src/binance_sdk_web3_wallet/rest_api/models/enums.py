@@ -208,6 +208,11 @@ class QuoteAndBuildSwapTransactionVendorEnum(Enum):
     LiquidMesh = "LiquidMesh"
 
 
+class QuoteAndBuildSwapTransactionEnableRfqEnum(Enum):
+    TRUE = "true"
+    FALSE = "false"
+
+
 class QuoteAndBuildSwapTransactionApproveTransactionEnum(Enum):
     TRUE = "true"
     FALSE = "false"

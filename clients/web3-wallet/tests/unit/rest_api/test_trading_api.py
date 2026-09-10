@@ -50,6 +50,9 @@ from binance_sdk_web3_wallet.rest_api.models import (
     QuoteAndBuildSwapTransactionVendorEnum,
 )
 from binance_sdk_web3_wallet.rest_api.models import (
+    QuoteAndBuildSwapTransactionEnableRfqEnum,
+)
+from binance_sdk_web3_wallet.rest_api.models import (
     QuoteAndBuildSwapTransactionApproveTransactionEnum,
 )
 from binance_sdk_web3_wallet.rest_api.models import (
@@ -2081,6 +2084,8 @@ class TestTradingApi:
             "recv_window": 5000,
             "nonce": "unique-nonce-string",
             "slippage_percent": "0.5",
+            "exclude_dexes": "Pancakeswap V4,Pancakeswap V3",
+            "enable_rfq": QuoteAndBuildSwapTransactionEnableRfqEnum["TRUE"].value,
             "approve_transaction": QuoteAndBuildSwapTransactionApproveTransactionEnum[
                 "TRUE"
             ].value,

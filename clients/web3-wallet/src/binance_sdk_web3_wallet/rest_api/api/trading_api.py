@@ -34,6 +34,7 @@ from ..models import BuildSwapTransactionAutoSlippageEnum
 from ..models import GetAggregatedQuoteVendorEnum
 from ..models import GetAggregatedQuoteFeeSourceEnum
 from ..models import QuoteAndBuildSwapTransactionVendorEnum
+from ..models import QuoteAndBuildSwapTransactionEnableRfqEnum
 from ..models import QuoteAndBuildSwapTransactionApproveTransactionEnum
 from ..models import QuoteAndBuildSwapTransactionGasLevelEnum
 from ..models import QuoteAndBuildSwapTransactionAutoSlippageEnum
@@ -698,6 +699,8 @@ class TradingApi:
         recv_window: Optional[int] = None,
         nonce: Optional[str] = None,
         slippage_percent: Optional[str] = None,
+        exclude_dexes: Optional[str] = None,
+        enable_rfq: Optional[QuoteAndBuildSwapTransactionEnableRfqEnum] = None,
         approve_transaction: Optional[
             QuoteAndBuildSwapTransactionApproveTransactionEnum
         ] = None,
@@ -738,6 +741,8 @@ class TradingApi:
         - Solana (`CT_501`): `0` to less than `100` (i.e. `< 100`)
 
         `"0.5"` means 0.5% maximum slippage. When `autoSlippage=true` this field is overridden by the auto-computed value.
+                    exclude_dexes (Optional[str] = None): Comma-separated list of DEXes to exclude from routing (block specific protocols). Only effective when `vendor=LiquidMesh`. **Use the `dexName` values returned in the response `routerResult.dexRouterList` as-is --- the response format is the source of truth** (e.g. `"Pancakeswap V4,Pancakeswap V3"`). On EVM/Sui/Tron chains these are normalized (lowercased, spaces to underscores) into gateway identifiers automatically; on Solana the value is passed through as-is and is **case-sensitive**, so it must match the response value exactly (e.g. `BisonFi`). Raw gateway identifiers (e.g. `pancakeswap_v4`) are also accepted. Note: URL-encode spaces when sending the query (e.g. `Pancakeswap%20V4`). Omit or leave empty to exclude nothing (behavior unchanged). The server only enforces a length cap (2000 chars); invalid values are rejected by the gateway.
+                    enable_rfq (Optional[QuoteAndBuildSwapTransactionEnableRfqEnum] = None): Whether to enable RFQ liquidity sources for routing. Default depends on the token pair: **BStock pairs default to `"true"` (RFQ enabled)**; all other tokens default to `"false"` (RFQ disabled, AMM-only routing, deadline-safe --- suitable for slow signing such as hardware wallets). An explicit value always overrides the default. `"true"` enables RFQ liquidity for potentially better pricing, but the returned calldata may embed RFQ settlements with a short deadline (~30s); slow signing would trigger a `DeadlinePassed` revert. Only effective when `vendor=LiquidMesh`.
                     approve_transaction (Optional[QuoteAndBuildSwapTransactionApproveTransactionEnum] = None): When "true", `signatureData` includes the spender address and approve calldata so the client can submit it before the swap. Defaults to false.
                     approve_amount (Optional[str] = None): Override approve amount (smallest unit, positive integer string). Defaults to the swap amount.
                     gas_limit (Optional[str] = None): Gas limit override (positive integer string). EVM only.
@@ -806,6 +811,8 @@ class TradingApi:
             "user_wallet_address": user_wallet_address,
             "vendor": vendor,
             "slippage_percent": slippage_percent,
+            "exclude_dexes": exclude_dexes,
+            "enable_rfq": enable_rfq,
             "approve_transaction": approve_transaction,
             "approve_amount": approve_amount,
             "gas_limit": gas_limit,

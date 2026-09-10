@@ -1,5 +1,16 @@
 # Changelog
 
+## 6.2.0 - 2026-09-10
+
+### Changed (2)
+
+- Added parameter `enableRFQ`
+  - affected methods:
+    - `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`)
+- Added parameter `excludeDexes`
+  - affected methods:
+    - `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`)
+
 ## 6.1.0 - 2026-09-02
 
 ### Added (17)

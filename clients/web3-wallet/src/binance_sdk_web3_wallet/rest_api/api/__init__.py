@@ -17,3 +17,4 @@ from .rwa_data_api import RWADataApi as RWADataApi
 from .trading_api import TradingApi as TradingApi
 from .transaction_api import TransactionApi as TransactionApi
 from .wallet_api import WalletApi as WalletApi
+from .web_socket_api import WebSocketApi as WebSocketApi

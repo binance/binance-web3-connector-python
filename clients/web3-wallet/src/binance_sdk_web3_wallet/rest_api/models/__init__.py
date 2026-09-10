@@ -803,6 +803,12 @@ from .get_wallet_supported_chains_response import (
 from .get_wallet_supported_chains_response_data_inner import (
     GetWalletSupportedChainsResponseDataInner as GetWalletSupportedChainsResponseDataInner,
 )
+from .get_web_socket_auth_token_response import (
+    GetWebSocketAuthTokenResponse as GetWebSocketAuthTokenResponse,
+)
+from .get_web_socket_auth_token_response_data import (
+    GetWebSocketAuthTokenResponseData as GetWebSocketAuthTokenResponseData,
+)
 from .investment_page_result import InvestmentPageResult as InvestmentPageResult
 from .investment_page_result_list_inner import (
     InvestmentPageResultListInner as InvestmentPageResultListInner,
@@ -1047,6 +1053,9 @@ from .enums import GetAggregatedQuoteVendorEnum as GetAggregatedQuoteVendorEnum
 from .enums import GetAggregatedQuoteFeeSourceEnum as GetAggregatedQuoteFeeSourceEnum
 from .enums import (
     QuoteAndBuildSwapTransactionVendorEnum as QuoteAndBuildSwapTransactionVendorEnum,
+)
+from .enums import (
+    QuoteAndBuildSwapTransactionEnableRfqEnum as QuoteAndBuildSwapTransactionEnableRfqEnum,
 )
 from .enums import (
     QuoteAndBuildSwapTransactionApproveTransactionEnum as QuoteAndBuildSwapTransactionApproveTransactionEnum,
