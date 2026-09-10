@@ -1,11 +1,11 @@
-# Binance Python Web3 Wallet SDK
+# Binance Python Web3 Wallet
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/binance/binance-web3-connector-python/ci.yaml)](https://github.com/binance/binance-web3-connector-python/actions)
 [![Open Issues](https://img.shields.io/github/issues/binance/binance-web3-connector-python)](https://github.com/binance/binance-web3-connector-python/issues)
 [![Code Style: Black](https://img.shields.io/badge/code_style-black-black)](https://black.readthedocs.io/en/stable/)
-[![PyPI version](https://img.shields.io/pypi/v/binance-sdk-web3-wallet)](https://pypi.python.org/pypi/binance-sdk-web3-wallet)
-[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-sdk-web3-wallet.svg)](https://pypi.org/project/binance-sdk-web3-wallet/)
-[![Python version](https://img.shields.io/pypi/pyversions/binance-sdk-web3-wallet)](https://www.python.org/downloads/)
+[![PyPI version](https://img.shields.io/pypi/v/binance-web3-wallet)](https://pypi.python.org/pypi/binance-web3-wallet)
+[![PyPI Downloads](https://img.shields.io/pypi/dm/binance-web3-wallet.svg)](https://pypi.org/project/binance-web3-wallet/)
+[![Python version](https://img.shields.io/pypi/pyversions/binance-web3-wallet)](https://www.python.org/downloads/)
 [![Known Vulnerabilities](https://img.shields.io/badge/security-scanned-brightgreen)](https://github.com/binance/binance-web3-connector-python/security)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -34,7 +34,7 @@ This is a client library for the Binance Web3 Wallet API, enabling developers to
 To use this library, ensure your environment is running Python version **3.10** or later.
 
 ```bash
-pip install binance-sdk-web3-wallet
+pip install binance-web3-wallet
 ```
 
 ## Documentation
