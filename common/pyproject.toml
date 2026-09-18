@@ -1,0 +1,44 @@
+[tool.poetry]
+name = "binance-web3-common"
+version = "1.0.0"
+description = "Binance Common Types and Utilities for Binance Connectors"
+authors = ["Binance"]
+license = "MIT"
+readme = "README.md"
+include = ["CHANGELOG.md", "LICENSE", "README.md", "src/binance_web3_common/py.typed"]
+packages = [
+  { include = "binance_web3_common", from = "src" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.15"
+binance-common = ">=4.4.0"
+requests = ">=2.34.2"
+urllib3 = ">=2.7.0"
+pydantic = ">=2.10.0"
+websockets = "^15.0.1"
+pycryptodome = "^3.17"
+aiohttp = "^3.14.3"
+
+[tool.poetry.extras]
+dev = ["pytest"]
+
+[tool.poetry.group.dev.dependencies]
+tox = "^4.53.0"
+pytest-asyncio = "^1.0.0"
+black = "^26.3.1"
+ruff = "^0.12.0"
+pytest = ">=9.0.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+exclude = [".git", ".tox", "build", "dist"]
+
+[tool.ruff.lint]
+ignore = ["E741"]
+
+[tool.flake8]
+max-line-length = 100
