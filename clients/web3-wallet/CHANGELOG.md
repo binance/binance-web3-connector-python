@@ -1,5 +1,15 @@
 # Changelog
 
+## 7.0.0 - 2026-09-1*
+
+### Added (1)
+
+- Added `binance-web3-common` library
+
+### Changed ()
+
+- Updated `binance-common` library to version `4.4.0`
+
 ## 6.2.0 - 2026-09-10
 
 ### Changed (2)

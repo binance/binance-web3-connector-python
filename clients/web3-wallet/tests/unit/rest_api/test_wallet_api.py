@@ -15,9 +15,9 @@ import requests
 from unittest.mock import MagicMock, patch
 from urllib.parse import parse_qs
 
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
-from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
+from binance_web3_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_web3_wallet.rest_api.api import WalletApi
 from binance_sdk_web3_wallet.rest_api.models import GetAllTokenBalancesByAddressResponse
@@ -57,7 +57,7 @@ class TestWalletApi:
 
         self.mock_session.request.return_value = mock_response
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_all_token_balances_by_address_success(self, mock_get_signature):
         """Test get_all_token_balances_by_address() successfully with required parameters only."""
 
@@ -125,7 +125,7 @@ class TestWalletApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_all_token_balances_by_address_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -214,7 +214,7 @@ class TestWalletApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_all_token_balances_by_address()
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_balances_by_address_success(self, mock_get_signature):
         """Test get_token_balances_by_address() successfully with required parameters only."""
 
@@ -298,7 +298,7 @@ class TestWalletApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_balances_by_address_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -432,7 +432,7 @@ class TestWalletApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_token_balances_by_address(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_transaction_detail_by_hash_success(self, mock_get_signature):
         """Test get_transaction_detail_by_hash() successfully with required parameters only."""
 
@@ -540,7 +540,7 @@ class TestWalletApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_transaction_detail_by_hash_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -665,7 +665,7 @@ class TestWalletApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_transaction_detail_by_hash()
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_transactions_by_address_success(self, mock_get_signature):
         """Test get_transactions_by_address() successfully with required parameters only."""
 
@@ -759,7 +759,7 @@ class TestWalletApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_transactions_by_address_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -891,7 +891,7 @@ class TestWalletApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_transactions_by_address(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_wallet_supported_chains_success(self, mock_get_signature):
         """Test get_wallet_supported_chains() successfully with required parameters only."""
 
@@ -947,7 +947,7 @@ class TestWalletApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_wallet_supported_chains_success_with_optional_params(
         self, mock_get_signature
     ):

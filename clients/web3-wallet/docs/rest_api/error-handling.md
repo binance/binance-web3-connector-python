@@ -1,7 +1,7 @@
 # Error Handling
 
 ```python
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import (
     ClientError,
     UnauthorizedError,

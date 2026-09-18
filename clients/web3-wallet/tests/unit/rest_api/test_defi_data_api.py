@@ -15,9 +15,9 @@ import requests
 from unittest.mock import MagicMock, patch
 from urllib.parse import parse_qs
 
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
-from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
+from binance_web3_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_web3_wallet.rest_api.api import DefiDataApi
 from binance_sdk_web3_wallet.rest_api.models import GetDeFiPositionsResponse
@@ -56,7 +56,7 @@ class TestDefiDataApi:
 
         self.mock_session.request.return_value = mock_response
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_de_fi_positions_success(self, mock_get_signature):
         """Test get_de_fi_positions() successfully with required parameters only."""
 
@@ -213,7 +213,7 @@ class TestDefiDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_de_fi_positions_success_with_optional_params(self, mock_get_signature):
         """Test get_de_fi_positions() successfully with optional parameters."""
 
@@ -388,7 +388,7 @@ class TestDefiDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_de_fi_positions(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_investment_detail_success(self, mock_get_signature):
         """Test get_investment_detail() successfully with required parameters only."""
 
@@ -487,7 +487,7 @@ class TestDefiDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_investment_detail_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -606,7 +606,7 @@ class TestDefiDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_investment_detail(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_protocol_detail_success(self, mock_get_signature):
         """Test get_protocol_detail() successfully with required parameters only."""
 
@@ -715,7 +715,7 @@ class TestDefiDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_protocol_detail_success_with_optional_params(self, mock_get_signature):
         """Test get_protocol_detail() successfully with optional parameters."""
 
@@ -847,7 +847,7 @@ class TestDefiDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_protocol_detail(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_list_de_fi_investments_success(self, mock_get_signature):
         """Test list_de_fi_investments() successfully with required parameters only."""
 
@@ -935,7 +935,7 @@ class TestDefiDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_list_de_fi_investments_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1036,7 +1036,7 @@ class TestDefiDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.list_de_fi_investments(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_list_de_fi_protocols_success(self, mock_get_signature):
         """Test list_de_fi_protocols() successfully with required parameters only."""
 
@@ -1097,7 +1097,7 @@ class TestDefiDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_list_de_fi_protocols_success_with_optional_params(
         self, mock_get_signature
     ):

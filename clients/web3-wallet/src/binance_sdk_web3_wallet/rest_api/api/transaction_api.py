@@ -10,11 +10,11 @@ Do not edit the class manually.
 
 from typing import Optional, Union
 from requests import Session
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 
 from ..models import BroadcastTransactionsResponse
 from ..models import GetBroadcastOrdersResponse
@@ -115,7 +115,6 @@ class TransactionApi:
             path="/api/v1/dex/pre-transaction/broadcast-transaction",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=BroadcastTransactionsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -189,7 +188,6 @@ class TransactionApi:
             path="/api/v1/dex/post-transaction/orders",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetBroadcastOrdersResponse,
             web3_headers=headers,
             is_signed=True,
@@ -264,7 +262,6 @@ class TransactionApi:
             path="/api/v1/dex/pre-transaction/gas-limit",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetGasLimitResponse,
             web3_headers=headers,
             is_signed=True,
@@ -322,7 +319,6 @@ class TransactionApi:
             path="/api/v1/dex/pre-transaction/gas-price",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetGasPriceResponse,
             web3_headers=headers,
             is_signed=True,
@@ -374,7 +370,6 @@ class TransactionApi:
             path="/api/v1/dex/pre-transaction/block-height",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetLatestBlockHeightResponse,
             web3_headers=headers,
             is_signed=True,
@@ -416,7 +411,6 @@ class TransactionApi:
             path="/api/v1/dex/pre-transaction/supported/chain",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTransactionSupportedChainsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -491,7 +485,6 @@ class TransactionApi:
             path="/api/v1/dex/pre-transaction/simulate",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=SimulateTransactionsResponse,
             web3_headers=headers,
             is_signed=True,

@@ -15,9 +15,9 @@ import requests
 from unittest.mock import MagicMock, patch
 from urllib.parse import parse_qs
 
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
-from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
+from binance_web3_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_web3_wallet.rest_api.api import TradingApi
 from binance_sdk_web3_wallet.rest_api.models import BuildSolanaSwapInstructionsResponse
@@ -89,7 +89,7 @@ class TestTradingApi:
 
         self.mock_session.request.return_value = mock_response
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_build_solana_swap_instructions_success(self, mock_get_signature):
         """Test build_solana_swap_instructions() successfully with required parameters only."""
 
@@ -233,7 +233,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_build_solana_swap_instructions_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -536,7 +536,7 @@ class TestTradingApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.build_solana_swap_instructions(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_build_swap_transaction_success(self, mock_get_signature):
         """Test build_swap_transaction() successfully with required parameters only."""
 
@@ -679,7 +679,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_build_swap_transaction_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -941,7 +941,7 @@ class TestTradingApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.build_swap_transaction(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_aggregated_quote_success(self, mock_get_signature):
         """Test get_aggregated_quote() successfully with required parameters only."""
 
@@ -1057,7 +1057,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_aggregated_quote_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1241,7 +1241,7 @@ class TestTradingApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_aggregated_quote(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_aggregator_supported_chains_success(self, mock_get_signature):
         """Test get_aggregator_supported_chains() successfully with required parameters only."""
 
@@ -1297,7 +1297,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_aggregator_supported_chains_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1368,7 +1368,7 @@ class TestTradingApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_aggregator_supported_chains()
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_erc20_approve_transaction_success(self, mock_get_signature):
         """Test get_erc20_approve_transaction() successfully with required parameters only."""
 
@@ -1439,7 +1439,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_erc20_approve_transaction_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1565,7 +1565,7 @@ class TestTradingApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_erc20_approve_transaction(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_rfq_order_status_success(self, mock_get_signature):
         """Test get_rfq_order_status() successfully with required parameters only."""
 
@@ -1626,7 +1626,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_rfq_order_status_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1710,7 +1710,7 @@ class TestTradingApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_rfq_order_status(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_transaction_status_success(self, mock_get_signature):
         """Test get_transaction_status() successfully with required parameters only."""
 
@@ -1798,7 +1798,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_transaction_status_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1918,7 +1918,7 @@ class TestTradingApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_transaction_status(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_quote_and_build_swap_transaction_success(self, mock_get_signature):
         """Test quote_and_build_swap_transaction() successfully with required parameters only."""
 
@@ -2068,7 +2068,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_quote_and_build_swap_transaction_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -2342,7 +2342,7 @@ class TestTradingApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.quote_and_build_swap_transaction(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_submit_rfq_order_success(self, mock_get_signature):
         """Test submit_rfq_order() successfully with required parameters only."""
 
@@ -2407,7 +2407,7 @@ class TestTradingApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_submit_rfq_order_success_with_optional_params(self, mock_get_signature):
         """Test submit_rfq_order() successfully with optional parameters."""
 

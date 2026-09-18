@@ -14,8 +14,8 @@ import requests
 
 from unittest.mock import MagicMock, patch
 
-from binance_common.configuration import ConfigurationRestAPI
-from binance_common.utils import is_one_of_model
+from binance_web3_common.configuration import ConfigurationRestAPI
+from binance_web3_common.utils import is_one_of_model
 
 from binance_sdk_web3_wallet.rest_api.api import WebSocketApi
 from binance_sdk_web3_wallet.rest_api.models import GetWebSocketAuthTokenResponse
@@ -45,7 +45,7 @@ class TestWebSocketApi:
 
         self.mock_session.request.return_value = mock_response
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_web_socket_auth_token_success(self, mock_get_signature):
         """Test get_web_socket_auth_token() successfully with required parameters only."""
 
@@ -92,7 +92,7 @@ class TestWebSocketApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_web_socket_auth_token_success_with_optional_params(
         self, mock_get_signature
     ):

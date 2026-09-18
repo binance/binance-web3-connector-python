@@ -19,8 +19,8 @@ This is a client library for the Binance Web3 Wallet API, enabling developers to
 - [Installation](#installation)
 - [Documentation](#documentation)
 - [REST APIs](#rest-apis)
+- [Websocket Streams](#websocket-streams)
 - [Testing](#testing)
-- [Migration Guide](#migration-guide)
 - [Contributing](#contributing)
 - [Licence](#licence)
 
@@ -141,6 +141,128 @@ The REST API provides detailed error types to help you handle issues effectively
 See the [Error Handling example](./docs/rest_api/error-handling.md) for detailed usage.
 
 If basePath is not provided, it defaults to https://web3.binance.com/build.
+
+### Websocket Streams
+
+WebSocket Streams provide real-time data feeds for market trades, candlesticks, and more. Use the [websocket-streams](./src/binance_sdk_spot/websocket_streams/websocket_streams.py) module to subscribe to these streams.
+
+```python
+import asyncio
+import logging
+
+from binance_web3_common.configuration import ConfigurationWebSocketStreams
+from binance_sdk_web3_wallet.web3_wallet import Web3Wallet
+
+logging.basicConfig(level=logging.INFO)
+
+configuration_ws_streams = ConfigurationWebSocketStreams(
+    api_key="api-key",
+    api_secret="api-secret",
+)
+
+client = Web3Wallet(config_ws_streams=configuration_ws_streams)
+
+
+async def price_stream():
+    connection = None
+    try:
+        connection = await client.websocket_streams.create_connection()
+
+        stream = await connection.price_stream(
+            chain_id="CT_501",
+            contract_address="C3DwDjT17gDvvCYC2nsdGHxDHVmQRdhKfpAdqQ29pump",
+        )
+        stream.on("message", lambda data: print(f"{data}"))
+    except Exception as e:
+        logging.error(f"price_stream() error: {e}")
+
+if __name__ == "__main__":
+    asyncio.run(price_stream())
+```
+
+More examples are available in the [`examples/websocket-streams`](./examples/websocket_streams/) folder.
+
+#### Configuration Options
+
+The WebSocket Streams API supports the following advanced configuration options:
+
+- `reconnect_delay`: Delay (ms) between reconnections.
+- `compression`: Enable response compression.
+- `mode`: Choose between `single` and `pool` connection modes.
+  - `single`: A single WebSocket connection.
+  - `pool`: A pool of WebSocket connections.
+- `pool_size`: Define the number of WebSocket connections in pool mode.
+- `https_agent`: Custom HTTPS agent for advanced TLS configuration.
+- `user_agent`: Custom user agent string for WebSocket Streams.
+- `wsTokenEndpoint`: Endpoint to retrieve a WebSocket token for authentication (default: /api/v1/dex/market/wss/auth/token).
+- `wsToken`: Provide a WebSocket token for authentication if needed (default: token retrieved from `wsTokenEndpoint` automatically).
+
+##### Reconnect Delay
+
+Specify the delay in milliseconds between WebSocket reconnection attempts for streams. See the [Reconnect Delay example](./docs/websocket_streams/reconnect-delay.md) for detailed usage.
+
+##### Compression
+
+Enable or disable compression for WebSocket Streams messages. See the [Compression example](./docs/websocket_streams/compression.md) for detailed usage.
+
+##### Connection Mode
+
+Choose between `single` and `pool` connection modes for WebSocket Streams. The `single` mode uses a single WebSocket connection, while the `pool` mode uses a pool of WebSocket connections. See the [Connection Mode example](./docs/websocket_streams/connection-mode.md) for detailed usage.
+
+##### WebSocket Http Agent
+
+Customize the agent for advanced configurations. See the [WebSocket Http Agent example](./docs/websocket_streams/agent.md) for detailed usage.
+
+#### Unsubscribing from Streams
+
+You can unsubscribe from specific WebSocket streams using the `unsubscribe` method. This is useful for managing active subscriptions without closing the connection.
+
+```python
+import asyncio
+import logging
+
+from binance_web3_common.configuration import ConfigurationWebSocketStreams
+from binance_sdk_web3_wallet.web3_wallet import Web3Wallet
+
+logging.basicConfig(level=logging.INFO)
+
+configuration_ws_streams = ConfigurationWebSocketStreams(
+    api_key="api-key",
+    api_secret="api-secret",
+)
+
+client = Web3Wallet(config_ws_streams=configuration_ws_streams)
+
+
+async def price_stream():
+    connection = None
+    try:
+        connection = await client.websocket_streams.create_connection()
+
+        stream = await connection.price_stream(
+            chain_id="CT_501",
+            contract_address="C3DwDjT17gDvvCYC2nsdGHxDHVmQRdhKfpAdqQ29pump",
+        )
+        stream.on("message", lambda data: print(f"{data}"))
+
+        await asyncio.sleep(5)
+        await stream.unsubscribe()
+    except Exception as e:
+        logging.error(f"price_stream() error: {e}")
+    finally:
+        if connection:
+            await connection.close_connection(close_session=True)
+
+
+if __name__ == "__main__":
+    asyncio.run(price_stream())
+```
+
+If `wsURL` is not provided, it defaults to `wss://web3-stream.binance.com/w3w`.
+
+### Automatic Connection Renewal
+
+The WebSocket connection is automatically renewed for both WebSocket API and WebSocket Streams connections, before the 24 hours expiration of the API key. This ensures continuous connectivity.
 
 ## Testing
 

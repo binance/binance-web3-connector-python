@@ -10,11 +10,11 @@ Do not edit the class manually.
 
 from typing import List, Optional, Union
 from requests import Session
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 
 from ..models import GetDeFiPositionsResponse
 from ..models import GetInvestmentDetailResponse
@@ -89,7 +89,6 @@ class DefiDataApi:
             path="/api/v1/defi/data/position/list",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetDeFiPositionsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -141,7 +140,6 @@ class DefiDataApi:
             path="/api/v1/defi/data/investment/detail",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetInvestmentDetailResponse,
             web3_headers=headers,
             is_signed=True,
@@ -193,7 +191,6 @@ class DefiDataApi:
             path="/api/v1/defi/data/protocol/detail",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetProtocolDetailResponse,
             web3_headers=headers,
             is_signed=True,
@@ -269,7 +266,6 @@ class DefiDataApi:
             path="/api/v1/defi/data/investment/list",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=ListDeFiInvestmentsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -333,7 +329,6 @@ class DefiDataApi:
             path="/api/v1/defi/data/protocol/list",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=ListDeFiProtocolsResponse,
             web3_headers=headers,
             is_signed=True,

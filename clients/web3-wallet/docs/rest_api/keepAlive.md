@@ -1,7 +1,7 @@
 # Keep-Alive Configuration
 
 ```python
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_sdk_web3_wallet.web3_wallet import Web3Wallet
 from binance_sdk_web3_wallet.rest_api.models import GetPriceInfoResponse
 

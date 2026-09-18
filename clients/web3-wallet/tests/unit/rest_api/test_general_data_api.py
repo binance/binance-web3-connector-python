@@ -15,9 +15,9 @@ import requests
 from unittest.mock import MagicMock, patch
 from urllib.parse import parse_qs
 
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
-from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
+from binance_web3_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_web3_wallet.rest_api.api import GeneralDataApi
 from binance_sdk_web3_wallet.rest_api.models import GetCandlesResponse
@@ -65,7 +65,7 @@ class TestGeneralDataApi:
 
         self.mock_session.request.return_value = mock_response
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_candles_success(self, mock_get_signature):
         """Test get_candles() successfully with required parameters only."""
 
@@ -126,7 +126,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_candles_success_with_optional_params(self, mock_get_signature):
         """Test get_candles() successfully with optional parameters."""
 
@@ -223,7 +223,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_candles(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_holders_ranking_success(self, mock_get_signature):
         """Test get_holders_ranking() successfully with required parameters only."""
 
@@ -301,7 +301,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_holders_ranking_success_with_optional_params(self, mock_get_signature):
         """Test get_holders_ranking() successfully with optional parameters."""
 
@@ -412,7 +412,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_holders_ranking(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_hot_token_list_success(self, mock_get_signature):
         """Test get_hot_token_list() successfully with required parameters only."""
 
@@ -500,7 +500,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_hot_token_list_success_with_optional_params(self, mock_get_signature):
         """Test get_hot_token_list() successfully with optional parameters."""
 
@@ -662,7 +662,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_hot_token_list(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_supported_chains_success(self, mock_get_signature):
         """Test get_supported_chains() successfully with required parameters only."""
 
@@ -717,7 +717,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_supported_chains_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -783,7 +783,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_supported_chains()
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_advanced_info_success(self, mock_get_signature):
         """Test get_token_advanced_info() successfully with required parameters only."""
 
@@ -865,7 +865,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_advanced_info_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -983,7 +983,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_token_advanced_info(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_basic_info_success(self, mock_get_signature):
         """Test get_token_basic_info() successfully with required parameters only."""
 
@@ -1051,7 +1051,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_basic_info_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1153,7 +1153,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_token_basic_info(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_dev_info_success(self, mock_get_signature):
         """Test get_token_dev_info() successfully with required parameters only."""
 
@@ -1223,7 +1223,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_dev_info_success_with_optional_params(self, mock_get_signature):
         """Test get_token_dev_info() successfully with optional parameters."""
 
@@ -1325,7 +1325,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_token_dev_info(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_price_success(self, mock_get_signature):
         """Test get_token_price() successfully with required parameters only."""
 
@@ -1377,7 +1377,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_price_success_with_optional_params(self, mock_get_signature):
         """Test get_token_price() successfully with optional parameters."""
 
@@ -1438,7 +1438,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_token_price()
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_trades_success(self, mock_get_signature):
         """Test get_token_trades() successfully with required parameters only."""
 
@@ -1518,7 +1518,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_trades_success_with_optional_params(self, mock_get_signature):
         """Test get_token_trades() successfully with optional parameters."""
 
@@ -1634,7 +1634,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_token_trades(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_trading_info_success(self, mock_get_signature):
         """Test get_token_trading_info() successfully with required parameters only."""
 
@@ -1744,7 +1744,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_token_trading_info_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1865,7 +1865,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_token_trading_info()
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_top_liquidity_pools_success(self, mock_get_signature):
         """Test get_top_liquidity_pools() successfully with required parameters only."""
 
@@ -1940,7 +1940,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_top_liquidity_pools_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -2051,7 +2051,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_top_liquidity_pools(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_top_traders_success(self, mock_get_signature):
         """Test get_top_traders() successfully with required parameters only."""
 
@@ -2127,7 +2127,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_top_traders_success_with_optional_params(self, mock_get_signature):
         """Test get_top_traders() successfully with optional parameters."""
 
@@ -2236,7 +2236,7 @@ class TestGeneralDataApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_top_traders(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_search_token_success(self, mock_get_signature):
         """Test search_token() successfully with required parameters only."""
 
@@ -2307,7 +2307,7 @@ class TestGeneralDataApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_search_token_success_with_optional_params(self, mock_get_signature):
         """Test search_token() successfully with optional parameters."""
 

@@ -10,11 +10,11 @@ Do not edit the class manually.
 
 from typing import Optional, Union
 from requests import Session
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 
 from ..models import GetCandlesResponse
 from ..models import GetHoldersRankingResponse
@@ -118,7 +118,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/candles",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetCandlesResponse,
             web3_headers=headers,
             is_signed=True,
@@ -184,7 +183,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/token/holder",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetHoldersRankingResponse,
             web3_headers=headers,
             is_signed=True,
@@ -392,7 +390,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/token/hot-token",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetHotTokenListResponse,
             web3_headers=headers,
             is_signed=True,
@@ -434,7 +431,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/supported/chain",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetSupportedChainsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -494,7 +490,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/token/advanced-info",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTokenAdvancedInfoResponse,
             web3_headers=headers,
             is_signed=True,
@@ -554,7 +549,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/token/basic-info",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTokenBasicInfoResponse,
             web3_headers=headers,
             is_signed=True,
@@ -614,7 +608,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/memepump/tokenDevInfo",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTokenDevInfoResponse,
             web3_headers=headers,
             is_signed=True,
@@ -656,7 +649,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/price",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTokenPriceResponse,
             web3_headers=headers,
             is_signed=True,
@@ -731,7 +723,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/trades",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTokenTradesResponse,
             web3_headers=headers,
             is_signed=True,
@@ -773,7 +764,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/price-info",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTokenTradingInfoResponse,
             web3_headers=headers,
             is_signed=True,
@@ -833,7 +823,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/token/top-liquidity",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTopLiquidityPoolsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -899,7 +888,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/token/top-trader",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTopTradersResponse,
             web3_headers=headers,
             is_signed=True,
@@ -957,7 +945,6 @@ class GeneralDataApi:
             path="/api/v1/dex/market/token/search",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=SearchTokenResponse,
             web3_headers=headers,
             is_signed=True,

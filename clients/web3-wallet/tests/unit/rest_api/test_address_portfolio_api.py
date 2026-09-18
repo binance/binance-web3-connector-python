@@ -15,9 +15,9 @@ import requests
 from unittest.mock import MagicMock, patch
 from urllib.parse import parse_qs
 
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
-from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
+from binance_web3_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_web3_wallet.rest_api.api import AddressPortfolioApi
 from binance_sdk_web3_wallet.rest_api.models import (
@@ -65,7 +65,7 @@ class TestAddressPortfolioApi:
 
         self.mock_session.request.return_value = mock_response
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_address_pn_l_for_specific_token_success(self, mock_get_signature):
         """Test get_address_pn_l_for_specific_token() successfully with required parameters only."""
 
@@ -149,7 +149,7 @@ class TestAddressPortfolioApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_address_pn_l_for_specific_token_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -289,7 +289,7 @@ class TestAddressPortfolioApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_address_pn_l_for_specific_token(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_address_portfolio_overview_success(self, mock_get_signature):
         """Test get_address_portfolio_overview() successfully with required parameters only."""
 
@@ -386,7 +386,7 @@ class TestAddressPortfolioApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_address_portfolio_overview_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -541,7 +541,7 @@ class TestAddressPortfolioApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_address_portfolio_overview(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_address_recent_pn_l_success(self, mock_get_signature):
         """Test get_address_recent_pn_l() successfully with required parameters only."""
 
@@ -619,7 +619,7 @@ class TestAddressPortfolioApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_address_recent_pn_l_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -734,7 +734,7 @@ class TestAddressPortfolioApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_address_recent_pn_l(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_dex_trade_history_success(self, mock_get_signature):
         """Test get_dex_trade_history() successfully with required parameters only."""
 
@@ -808,7 +808,7 @@ class TestAddressPortfolioApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_dex_trade_history_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -923,7 +923,7 @@ class TestAddressPortfolioApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_dex_trade_history(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_leaderboard_success(self, mock_get_signature):
         """Test get_leaderboard() successfully with required parameters only."""
 
@@ -1022,7 +1022,7 @@ class TestAddressPortfolioApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_leaderboard_success_with_optional_params(self, mock_get_signature):
         """Test get_leaderboard() successfully with optional parameters."""
 
@@ -1179,7 +1179,7 @@ class TestAddressPortfolioApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_leaderboard(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_portfolio_supported_chains_success(self, mock_get_signature):
         """Test get_portfolio_supported_chains() successfully with required parameters only."""
 
@@ -1238,7 +1238,7 @@ class TestAddressPortfolioApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_portfolio_supported_chains_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1308,7 +1308,7 @@ class TestAddressPortfolioApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_portfolio_supported_chains()
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_tracked_trades_success(self, mock_get_signature):
         """Test get_tracked_trades() successfully with required parameters only."""
 
@@ -1378,7 +1378,7 @@ class TestAddressPortfolioApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_tracked_trades_success_with_optional_params(self, mock_get_signature):
         """Test get_tracked_trades() successfully with optional parameters."""
 

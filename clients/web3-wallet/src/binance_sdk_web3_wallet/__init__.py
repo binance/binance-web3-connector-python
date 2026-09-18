@@ -11,13 +11,15 @@ from binance_common.errors import (
     NotFoundError,
     BadRequestError,
 )
-from binance_common.constants import (
+from binance_web3_common.constants import (
     WEB3_WALLET_REST_API_PROD_URL,
+    WEB3_WALLET_WS_STREAMS_PROD_URL,
 )
 
 __all__ = [
     "Web3Wallet",
     "WEB3_WALLET_REST_API_PROD_URL",
+    "WEB3_WALLET_WS_STREAMS_PROD_URL",
     "ClientError",
     "RequiredError",
     "UnauthorizedError",

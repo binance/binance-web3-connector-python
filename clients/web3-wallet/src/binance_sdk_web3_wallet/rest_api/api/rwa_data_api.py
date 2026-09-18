@@ -10,11 +10,11 @@ Do not edit the class manually.
 
 from typing import Optional, Union
 from requests import Session
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 
 from ..models import GetRwaTokenIssuancePlatformsResponse
 from ..models import GetRwaTokenListResponse
@@ -80,7 +80,6 @@ class RWADataApi:
             path="/api/v1/dex/market/rwa/platforms",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetRwaTokenIssuancePlatformsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -135,7 +134,6 @@ class RWADataApi:
             path="/api/v1/dex/market/rwa/tokens",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetRwaTokenListResponse,
             web3_headers=headers,
             is_signed=True,
@@ -195,7 +193,6 @@ class RWADataApi:
             path="/api/v1/dex/market/rwa/price",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetRwaTokenPriceResponse,
             web3_headers=headers,
             is_signed=True,
@@ -255,7 +252,6 @@ class RWADataApi:
             path="/api/v1/dex/market/rwa/underlying-profile",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetRwaUnderlyingInfoResponse,
             web3_headers=headers,
             is_signed=True,
@@ -315,7 +311,6 @@ class RWADataApi:
             path="/api/v1/dex/market/rwa/underlying-market",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetRwaUnderlyingMarketDataResponse,
             web3_headers=headers,
             is_signed=True,
@@ -369,7 +364,6 @@ class RWADataApi:
             path="/api/v1/dex/market/rwa/search",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=SearchRwaTokenResponse,
             web3_headers=headers,
             is_signed=True,

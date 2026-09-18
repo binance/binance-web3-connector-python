@@ -15,9 +15,9 @@ import requests
 from unittest.mock import MagicMock, patch
 from urllib.parse import parse_qs
 
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
-from binance_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
+from binance_web3_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
 
 from binance_sdk_web3_wallet.rest_api.api import TransactionApi
 from binance_sdk_web3_wallet.rest_api.models import BroadcastTransactionsResponse
@@ -55,7 +55,7 @@ class TestTransactionApi:
 
         self.mock_session.request.return_value = mock_response
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_broadcast_transactions_success(self, mock_get_signature):
         """Test broadcast_transactions() successfully with required parameters only."""
 
@@ -122,7 +122,7 @@ class TestTransactionApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_broadcast_transactions_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -236,7 +236,7 @@ class TestTransactionApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.broadcast_transactions(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_broadcast_orders_success(self, mock_get_signature):
         """Test get_broadcast_orders() successfully with required parameters only."""
 
@@ -303,7 +303,7 @@ class TestTransactionApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_broadcast_orders_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -409,7 +409,7 @@ class TestTransactionApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_broadcast_orders(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_gas_limit_success(self, mock_get_signature):
         """Test get_gas_limit() successfully with required parameters only."""
 
@@ -505,7 +505,7 @@ class TestTransactionApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_gas_limit_success_with_optional_params(self, mock_get_signature):
         """Test get_gas_limit() successfully with optional parameters."""
 
@@ -635,7 +635,7 @@ class TestTransactionApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_gas_limit(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_gas_price_success(self, mock_get_signature):
         """Test get_gas_price() successfully with required parameters only."""
 
@@ -711,7 +711,7 @@ class TestTransactionApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_gas_price_success_with_optional_params(self, mock_get_signature):
         """Test get_gas_price() successfully with optional parameters."""
 
@@ -808,7 +808,7 @@ class TestTransactionApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_gas_price(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_latest_block_height_success(self, mock_get_signature):
         """Test get_latest_block_height() successfully with required parameters only."""
 
@@ -861,7 +861,7 @@ class TestTransactionApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_latest_block_height_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -937,7 +937,7 @@ class TestTransactionApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_latest_block_height(**params)
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_transaction_supported_chains_success(self, mock_get_signature):
         """Test get_transaction_supported_chains() successfully with required parameters only."""
 
@@ -995,7 +995,7 @@ class TestTransactionApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_get_transaction_supported_chains_success_with_optional_params(
         self, mock_get_signature
     ):
@@ -1064,7 +1064,7 @@ class TestTransactionApi:
         with pytest.raises(Exception, match="ResponseError"):
             self.client.get_transaction_supported_chains()
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_simulate_transactions_success(self, mock_get_signature):
         """Test simulate_transactions() successfully with required parameters only."""
 
@@ -1172,7 +1172,7 @@ class TestTransactionApi:
 
         assert response.data() == expected
 
-    @patch("binance_common.utils.web3_signature")
+    @patch("binance_web3_common.utils.web3_signature")
     def test_simulate_transactions_success_with_optional_params(
         self, mock_get_signature
     ):

@@ -10,11 +10,11 @@ Do not edit the class manually.
 
 from typing import List, Optional, Union
 from requests import Session
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 
 from ..models import BuildDeFiClaimTransactionResponse
 from ..models import BuildDeFiDepositTransactionResponse
@@ -126,7 +126,6 @@ class DefiTransactionApi:
             path="/api/v1/defi/transaction/claim",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=BuildDeFiClaimTransactionResponse,
             web3_headers=headers,
             is_signed=True,
@@ -199,7 +198,6 @@ class DefiTransactionApi:
             path="/api/v1/defi/transaction/deposit",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=BuildDeFiDepositTransactionResponse,
             web3_headers=headers,
             is_signed=True,
@@ -285,7 +283,6 @@ class DefiTransactionApi:
             path="/api/v1/defi/transaction/redeem",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=BuildDeFiRedeemTransactionResponse,
             web3_headers=headers,
             is_signed=True,
@@ -386,7 +383,6 @@ class DefiTransactionApi:
             path="/api/v1/defi/transaction/lp-add",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=BuildLpAddTransactionResponse,
             web3_headers=headers,
             is_signed=True,
@@ -469,7 +465,6 @@ class DefiTransactionApi:
             path="/api/v1/defi/transaction/lp-remove",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=BuildLpRemoveTransactionResponse,
             web3_headers=headers,
             is_signed=True,
@@ -557,7 +552,6 @@ class DefiTransactionApi:
             path="/api/v1/defi/transaction/lp-add/calculate",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=CalculateLpAddPairedAmountsResponse,
             web3_headers=headers,
             is_signed=True,

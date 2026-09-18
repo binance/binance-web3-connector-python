@@ -10,10 +10,10 @@ Do not edit the class manually.
 
 from typing import Optional
 from requests import Session
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 
 from ..models import GetWebSocketAuthTokenResponse
 
@@ -67,7 +67,6 @@ class WebSocketApi:
             path="/api/v1/dex/market/wss/auth/token",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetWebSocketAuthTokenResponse,
             web3_headers=headers,
             is_signed=True,

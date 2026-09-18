@@ -10,11 +10,11 @@ Do not edit the class manually.
 
 from typing import Optional, Union
 from requests import Session
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 
 from ..models import BuildSolanaSwapInstructionsResponse
 from ..models import BuildSwapTransactionResponse
@@ -193,7 +193,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/swap-instruction",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=BuildSolanaSwapInstructionsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -345,7 +344,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/swap",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=BuildSwapTransactionResponse,
             web3_headers=headers,
             is_signed=True,
@@ -439,7 +437,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/quote",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetAggregatedQuoteResponse,
             web3_headers=headers,
             is_signed=True,
@@ -487,7 +484,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/supported/chain",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetAggregatorSupportedChainsResponse,
             web3_headers=headers,
             is_signed=True,
@@ -563,7 +559,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/approve-transaction",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetErc20ApproveTransactionResponse,
             web3_headers=headers,
             is_signed=True,
@@ -614,7 +609,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/order/{orderId}",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetRfqOrderStatusResponse,
             web3_headers=headers,
             is_signed=True,
@@ -681,7 +675,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/history",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetTransactionStatusResponse,
             web3_headers=headers,
             is_signed=True,
@@ -835,7 +828,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/quote-and-swap",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=QuoteAndBuildSwapTransactionResponse,
             web3_headers=headers,
             is_signed=True,
@@ -919,7 +911,6 @@ class TradingApi:
             path="/api/v1/dex/aggregator/order/submit",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=SubmitRfqOrderResponse,
             web3_headers=headers,
             is_signed=True,

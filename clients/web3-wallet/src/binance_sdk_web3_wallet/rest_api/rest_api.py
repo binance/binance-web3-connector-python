@@ -10,10 +10,10 @@ Do not edit the class manually.
 
 import requests
 from typing import Optional, List, TypeVar, Union
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 from .api.address_portfolio_api import AddressPortfolioApi
 from .api.b402_payments_api import B402PaymentsApi
 from .api.defi_data_api import DefiDataApi

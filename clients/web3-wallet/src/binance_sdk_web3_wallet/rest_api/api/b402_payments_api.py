@@ -10,11 +10,11 @@ Do not edit the class manually.
 
 from typing import Optional, Union
 from requests import Session
-from binance_common.configuration import ConfigurationRestAPI
+from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
 from binance_common.models import ApiResponse
 from binance_common.signature import Signers
-from binance_common.utils import send_request
+from binance_web3_common.utils import send_request
 
 from ..models import GetB402SupportedConfigurationsV1Response
 from ..models import GetB402SupportedConfigurationsV2Response
@@ -85,7 +85,6 @@ class B402PaymentsApi:
             path="/api/v1/b402/supported",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetB402SupportedConfigurationsV1Response,
             web3_headers=headers,
             is_signed=True,
@@ -136,7 +135,6 @@ class B402PaymentsApi:
             path="/api/v2/b402/supported",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=GetB402SupportedConfigurationsV2Response,
             web3_headers=headers,
             is_signed=True,
@@ -187,7 +185,6 @@ class B402PaymentsApi:
             path="/api/v1/b402/settle",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=SettleB402PaymentV1Response,
             web3_headers=headers,
             is_signed=True,
@@ -238,7 +235,6 @@ class B402PaymentsApi:
             path="/api/v2/b402/settle",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=SettleB402PaymentV2Response,
             web3_headers=headers,
             is_signed=True,
@@ -289,7 +285,6 @@ class B402PaymentsApi:
             path="/api/v1/b402/verify",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=VerifyB402PaymentV1Response,
             web3_headers=headers,
             is_signed=True,
@@ -340,7 +335,6 @@ class B402PaymentsApi:
             path="/api/v2/b402/verify",
             payload=payload,
             body=request_body,
-            time_unit=self._configuration.time_unit,
             response_model=VerifyB402PaymentV2Response,
             web3_headers=headers,
             is_signed=True,
