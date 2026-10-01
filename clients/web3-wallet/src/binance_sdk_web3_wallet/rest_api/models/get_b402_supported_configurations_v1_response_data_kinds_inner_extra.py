@@ -21,27 +21,25 @@ from typing import Set
 from typing_extensions import Self
 
 
-class GetB402SupportedConfigurationsV1Response2(BaseModel):
+class GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra(BaseModel):
     """
-    GetB402SupportedConfigurationsV1Response2
+    GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra
     """  # noqa: E501
 
-    status: Optional[StrictStr] = None
-    type: Optional[StrictStr] = None
-    code: Optional[StrictStr] = None
-    error_data: Optional[StrictStr] = Field(default=None, alias="errorData")
-    data: Optional[Dict[str, Any]] = None
-    sub_data: Optional[Dict[str, Any]] = Field(default=None, alias="subData")
-    params: Optional[Dict[str, Any]] = None
+    name: Optional[StrictStr] = None
+    version: Optional[StrictStr] = None
+    asset_transfer_method: Optional[StrictStr] = Field(
+        default=None, alias="assetTransferMethod"
+    )
+    facilitator_address: Optional[StrictStr] = Field(
+        default=None, alias="facilitatorAddress"
+    )
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "status",
-        "type",
-        "code",
-        "errorData",
-        "data",
-        "subData",
-        "params",
+        "name",
+        "version",
+        "assetTransferMethod",
+        "facilitatorAddress",
     ]
 
     model_config = ConfigDict(
@@ -65,7 +63,7 @@ class GetB402SupportedConfigurationsV1Response2(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetB402SupportedConfigurationsV1Response2 from a JSON string"""
+        """Create an instance of GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -95,31 +93,11 @@ class GetB402SupportedConfigurationsV1Response2(BaseModel):
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if error_data (nullable) is None
-        # and model_fields_set contains the field
-        if self.error_data is None and "error_data" in self.model_fields_set:
-            _dict["errorData"] = None
-
-        # set to None if data (nullable) is None
-        # and model_fields_set contains the field
-        if self.data is None and "data" in self.model_fields_set:
-            _dict["data"] = None
-
-        # set to None if sub_data (nullable) is None
-        # and model_fields_set contains the field
-        if self.sub_data is None and "sub_data" in self.model_fields_set:
-            _dict["subData"] = None
-
-        # set to None if params (nullable) is None
-        # and model_fields_set contains the field
-        if self.params is None and "params" in self.model_fields_set:
-            _dict["params"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetB402SupportedConfigurationsV1Response2 from a dict"""
+        """Create an instance of GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra from a dict"""
         if obj is None:
             return None
 
@@ -128,13 +106,10 @@ class GetB402SupportedConfigurationsV1Response2(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "status": obj.get("status"),
-                "type": obj.get("type"),
-                "code": obj.get("code"),
-                "errorData": obj.get("errorData"),
-                "data": obj.get("data"),
-                "subData": obj.get("subData"),
-                "params": obj.get("params"),
+                "name": obj.get("name"),
+                "version": obj.get("version"),
+                "assetTransferMethod": obj.get("assetTransferMethod"),
+                "facilitatorAddress": obj.get("facilitatorAddress"),
             }
         )
         # store additional fields in additional_properties

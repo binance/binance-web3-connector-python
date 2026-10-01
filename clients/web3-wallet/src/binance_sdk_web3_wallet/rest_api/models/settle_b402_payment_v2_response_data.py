@@ -15,36 +15,35 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_web3_wallet.rest_api.models.verify_b402_payment_v2_response1_data import (
-    VerifyB402PaymentV2Response1Data,
-)
 from typing import Set
 from typing_extensions import Self
 
 
-class VerifyB402PaymentV2Response1(BaseModel):
+class SettleB402PaymentV2ResponseData(BaseModel):
     """
-    VerifyB402PaymentV2Response1
+    SettleB402PaymentV2ResponseData
     """  # noqa: E501
 
-    status: Optional[StrictStr] = None
-    type: Optional[StrictStr] = None
-    code: Optional[StrictStr] = None
-    error_data: Optional[StrictStr] = Field(default=None, alias="errorData")
-    data: Optional[VerifyB402PaymentV2Response1Data] = None
-    sub_data: Optional[Dict[str, Any]] = Field(default=None, alias="subData")
-    params: Optional[Dict[str, Any]] = None
+    success: StrictBool
+    transaction: StrictStr
+    payer: Optional[StrictStr] = None
+    network: StrictStr
+    amount: Optional[StrictStr] = None
+    error_reason: Optional[StrictStr] = Field(default=None, alias="errorReason")
+    error_message: Optional[StrictStr] = Field(default=None, alias="errorMessage")
+    extensions: Optional[Dict[str, Any]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = [
-        "status",
-        "type",
-        "code",
-        "errorData",
-        "data",
-        "subData",
-        "params",
+        "success",
+        "transaction",
+        "payer",
+        "network",
+        "amount",
+        "errorReason",
+        "errorMessage",
+        "extensions",
     ]
 
     model_config = ConfigDict(
@@ -68,7 +67,7 @@ class VerifyB402PaymentV2Response1(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of VerifyB402PaymentV2Response1 from a JSON string"""
+        """Create an instance of SettleB402PaymentV2ResponseData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -93,34 +92,31 @@ class VerifyB402PaymentV2Response1(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of data
-        if self.data:
-            _dict["data"] = self.data.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if error_data (nullable) is None
+        # set to None if payer (nullable) is None
         # and model_fields_set contains the field
-        if self.error_data is None and "error_data" in self.model_fields_set:
-            _dict["errorData"] = None
+        if self.payer is None and "payer" in self.model_fields_set:
+            _dict["payer"] = None
 
-        # set to None if sub_data (nullable) is None
+        # set to None if error_reason (nullable) is None
         # and model_fields_set contains the field
-        if self.sub_data is None and "sub_data" in self.model_fields_set:
-            _dict["subData"] = None
+        if self.error_reason is None and "error_reason" in self.model_fields_set:
+            _dict["errorReason"] = None
 
-        # set to None if params (nullable) is None
+        # set to None if error_message (nullable) is None
         # and model_fields_set contains the field
-        if self.params is None and "params" in self.model_fields_set:
-            _dict["params"] = None
+        if self.error_message is None and "error_message" in self.model_fields_set:
+            _dict["errorMessage"] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of VerifyB402PaymentV2Response1 from a dict"""
+        """Create an instance of SettleB402PaymentV2ResponseData from a dict"""
         if obj is None:
             return None
 
@@ -129,17 +125,14 @@ class VerifyB402PaymentV2Response1(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "status": obj.get("status"),
-                "type": obj.get("type"),
-                "code": obj.get("code"),
-                "errorData": obj.get("errorData"),
-                "data": (
-                    VerifyB402PaymentV2Response1Data.from_dict(obj["data"])
-                    if obj.get("data") is not None
-                    else None
-                ),
-                "subData": obj.get("subData"),
-                "params": obj.get("params"),
+                "success": obj.get("success"),
+                "transaction": obj.get("transaction"),
+                "payer": obj.get("payer"),
+                "network": obj.get("network"),
+                "amount": obj.get("amount"),
+                "errorReason": obj.get("errorReason"),
+                "errorMessage": obj.get("errorMessage"),
+                "extensions": obj.get("extensions"),
             }
         )
         # store additional fields in additional_properties

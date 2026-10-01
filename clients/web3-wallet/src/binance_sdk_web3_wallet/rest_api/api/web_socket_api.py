@@ -41,8 +41,7 @@ class WebSocketApi:
         GET /api/v1/dex/market/wss/auth/token
         https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/web-socket-api#get-web-socket-auth-token
 
-        Get a WebSocket auth token before connecting to the WebSocket stream service. For details on WebSocket usage, please refer to the [WebSocket documentation](/products/websocket-api/introduction).
-
+        Get a WebSocket auth token before connecting to the WebSocket stream service. For details on WebSocket usage, please refer to the WebSocket documentation.
 
         Args:
             recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).

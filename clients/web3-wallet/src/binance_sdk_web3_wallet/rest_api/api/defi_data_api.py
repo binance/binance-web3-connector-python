@@ -52,14 +52,14 @@ class DefiDataApi:
                 POST /api/v1/defi/data/position/list
                 https://web3.binance.com/en/dev-docs/catalog/web3-wallet/api/rest-api/defi-data#get-de-fi-positions
 
-                Query DeFi positions for one or more wallet addresses on BSC. Returns protocol-level position summaries with token breakdowns. Optionally filter by specific chains via `binanceChainIds`.
-        Position coverage is wider than the protocol list used by data queries and transaction building — see [Supported Chains & Protocols](../supported-chains) for the difference.
+                Query DeFi positions for one or more wallet addresses across the supported EVM chains. Returns protocol-level position summaries with token breakdowns. Optionally filter by specific chains via `binanceChainIds`; when omitted, positions across all supported chains are returned.
+        Position coverage is wider than the protocol list used by data queries and transaction building — see Supported Chains & Protocols for the difference.
 
                 Args:
-                    addresses (Union[List[str], None]): Wallet addresses to query positions for. Up to 3 addresses per request (server-side configured and subject to change).
+                    addresses (Union[List[str], None]): Wallet addresses to query positions for. Up to 3 addresses per request (server-side configured and subject to change); the limit is shared across chains — a multi-chain query consumes the same 3-address budget.
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
-                    binance_chain_ids (Optional[List[str]] = None): Optional chain filter. When set, only positions on the specified chains are returned. This release supports BSC ("56") only.
+                    binance_chain_ids (Optional[List[str]] = None): Optional chain filter. When set, only positions on the specified chains are returned; when omitted, positions across all supported chains are returned. See Supported Chains & Protocols for the supported chain ID values — unsupported values are rejected with 40001.
 
                 Returns:
                     ApiResponse[GetDeFiPositionsResponse]
@@ -222,8 +222,8 @@ class DefiDataApi:
             recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
             nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
             defi_protocol_id (Optional[str] = None): Filter by DeFi protocol ID.
-            token_address_list (Optional[List[str]] = None): Filter by token addresses.
-            binance_chain_id (Optional[str] = None): Filter by Binance chain ID (e.g. "56"=BSC).
+            token_address_list (Optional[List[str]] = None): Filter by token addresses. When this field is provided, `binanceChainId` is required — the same address can be a different token on different chains; omitting the chain returns 40001.
+            binance_chain_id (Optional[str] = None): One of the supported chains — see Supported Chains & Protocols for the supported chain ID values. Chains outside this whitelist are rejected with 40001. When omitted (or blank), results span all supported chains.
             sort_field (Optional[str] = None): Field to sort by. Only two values are accepted: `tvl`, `apy`. Note: sorting by APY uses `apy` (the server-side field name), even though the response exposes `apyBps` / `apyDisplay`. Other values are not supported.
             sort_direction (Optional[ListDeFiInvestmentsSortDirectionEnum] = None): Sort direction.
             page (Optional[int] = None): Page number (1-based).
@@ -293,7 +293,7 @@ class DefiDataApi:
         Args:
             recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
             nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
-            binance_chain_id (Optional[str] = None): Filter by Binance chain ID (e.g. "56"=BSC).
+            binance_chain_id (Optional[str] = None): One of the supported chains — see Supported Chains & Protocols for the supported chain ID values. Chains outside this whitelist are rejected with 40001. When omitted (or blank), results span all supported chains.
             invest_type (Optional[ListDeFiProtocolsInvestTypeEnum] = None): Filter by investment type. Known values: `Earn`, `LiquidityPool`.
             sort_field (Optional[str] = None): Field to sort by. Only two values are accepted: `tvl`, `apy`. Note: sorting by APY uses `apy` (the server-side field name), even though the response exposes `apyBps` / `apyDisplay`. Other values are not supported.
             sort_direction (Optional[ListDeFiProtocolsSortDirectionEnum] = None): Sort direction.

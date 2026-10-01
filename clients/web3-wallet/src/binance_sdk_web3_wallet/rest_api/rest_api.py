@@ -140,7 +140,6 @@ from .models import GetTokenBalancesByAddressRequestTokenContractAddressesInner
 from .models import GetTokenBalancesByAddressExcludeRiskTokenEnum
 from .models import GetWebSocketAuthTokenResponse
 
-
 T = TypeVar("T")
 
 
@@ -711,14 +710,14 @@ class Web3WalletRestAPI:
         """
                 Get DeFi Positions
 
-                Query DeFi positions for one or more wallet addresses on BSC. Returns protocol-level position summaries with token breakdowns. Optionally filter by specific chains via `binanceChainIds`.
-        Position coverage is wider than the protocol list used by data queries and transaction building — see [Supported Chains & Protocols](../supported-chains) for the difference.
+                Query DeFi positions for one or more wallet addresses across the supported EVM chains. Returns protocol-level position summaries with token breakdowns. Optionally filter by specific chains via `binanceChainIds`; when omitted, positions across all supported chains are returned.
+        Position coverage is wider than the protocol list used by data queries and transaction building — see Supported Chains & Protocols for the difference.
 
                 Args:
-                    addresses (Union[List[str], None]): Wallet addresses to query positions for. Up to 3 addresses per request (server-side configured and subject to change).
+                    addresses (Union[List[str], None]): Wallet addresses to query positions for. Up to 3 addresses per request (server-side configured and subject to change); the limit is shared across chains — a multi-chain query consumes the same 3-address budget.
                     recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
                     nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
-                    binance_chain_ids (Optional[List[str]] = None): Optional chain filter. When set, only positions on the specified chains are returned. This release supports BSC ("56") only.
+                    binance_chain_ids (Optional[List[str]] = None): Optional chain filter. When set, only positions on the specified chains are returned; when omitted, positions across all supported chains are returned. See Supported Chains & Protocols for the supported chain ID values — unsupported values are rejected with 40001.
 
                 Returns:
                     ApiResponse[GetDeFiPositionsResponse]
@@ -811,8 +810,8 @@ class Web3WalletRestAPI:
             recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
             nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
             defi_protocol_id (Optional[str] = None): Filter by DeFi protocol ID.
-            token_address_list (Optional[List[str]] = None): Filter by token addresses.
-            binance_chain_id (Optional[str] = None): Filter by Binance chain ID (e.g. "56"=BSC).
+            token_address_list (Optional[List[str]] = None): Filter by token addresses. When this field is provided, `binanceChainId` is required — the same address can be a different token on different chains; omitting the chain returns 40001.
+            binance_chain_id (Optional[str] = None): One of the supported chains — see Supported Chains & Protocols for the supported chain ID values. Chains outside this whitelist are rejected with 40001. When omitted (or blank), results span all supported chains.
             sort_field (Optional[str] = None): Field to sort by. Only two values are accepted: `tvl`, `apy`. Note: sorting by APY uses `apy` (the server-side field name), even though the response exposes `apyBps` / `apyDisplay`. Other values are not supported.
             sort_direction (Optional[ListDeFiInvestmentsSortDirectionEnum] = None): Sort direction.
             page (Optional[int] = None): Page number (1-based).
@@ -858,7 +857,7 @@ class Web3WalletRestAPI:
         Args:
             recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).
             nonce (Optional[str] = None): Unique request identifier for anti-replay; falls back to X-OC-SIGN if omitted.
-            binance_chain_id (Optional[str] = None): Filter by Binance chain ID (e.g. "56"=BSC).
+            binance_chain_id (Optional[str] = None): One of the supported chains — see Supported Chains & Protocols for the supported chain ID values. Chains outside this whitelist are rejected with 40001. When omitted (or blank), results span all supported chains.
             invest_type (Optional[ListDeFiProtocolsInvestTypeEnum] = None): Filter by investment type. Known values: `Earn`, `LiquidityPool`.
             sort_field (Optional[str] = None): Field to sort by. Only two values are accepted: `tvl`, `apy`. Note: sorting by APY uses `apy` (the server-side field name), even though the response exposes `apyBps` / `apyDisplay`. Other values are not supported.
             sort_direction (Optional[ListDeFiProtocolsSortDirectionEnum] = None): Sort direction.
@@ -2380,8 +2379,8 @@ class Web3WalletRestAPI:
         - Solana (`CT_501`): `0` to less than `100` (i.e. `< 100`)
 
         `"0.5"` means 0.5% maximum slippage. When `autoSlippage=true` this field is overridden by the auto-computed value.
-                    exclude_dexes (Optional[str] = None): Comma-separated list of DEXes to exclude from routing (block specific protocols). Only effective when `vendor=LiquidMesh`. **Use the `dexName` values returned in the response `routerResult.dexRouterList` as-is --- the response format is the source of truth** (e.g. `"Pancakeswap V4,Pancakeswap V3"`). On EVM/Sui/Tron chains these are normalized (lowercased, spaces to underscores) into gateway identifiers automatically; on Solana the value is passed through as-is and is **case-sensitive**, so it must match the response value exactly (e.g. `BisonFi`). Raw gateway identifiers (e.g. `pancakeswap_v4`) are also accepted. Note: URL-encode spaces when sending the query (e.g. `Pancakeswap%20V4`). Omit or leave empty to exclude nothing (behavior unchanged). The server only enforces a length cap (2000 chars); invalid values are rejected by the gateway.
-                    enable_rfq (Optional[QuoteAndBuildSwapTransactionEnableRfqEnum] = None): Whether to enable RFQ liquidity sources for routing. Default depends on the token pair: **BStock pairs default to `"true"` (RFQ enabled)**; all other tokens default to `"false"` (RFQ disabled, AMM-only routing, deadline-safe --- suitable for slow signing such as hardware wallets). An explicit value always overrides the default. `"true"` enables RFQ liquidity for potentially better pricing, but the returned calldata may embed RFQ settlements with a short deadline (~30s); slow signing would trigger a `DeadlinePassed` revert. Only effective when `vendor=LiquidMesh`.
+                    exclude_dexes (Optional[str] = None): Comma-separated list of DEXes to exclude from routing. Pass the `dexName` values returned in the response `routerResult.dexRouterList` as-is (e.g. `"Pancakeswap V4,Pancakeswap V3"`). On EVM/Sui/Tron chains they are normalized automatically; on Solana the value is case-sensitive and must match the response exactly. Omit or leave empty to exclude nothing.
+                    enable_rfq (Optional[QuoteAndBuildSwapTransactionEnableRfqEnum] = None): Whether to enable RFQ liquidity sources for routing. Default depends on the token pair: **BStock pairs default to `"true"` (RFQ enabled)**; all other tokens default to `"false"` (RFQ disabled, AMM-only routing). An explicit value always overrides the default. `"true"` may return better pricing, but the returned calldata may embed RFQ settlements with a short (~30s) deadline.
                     approve_transaction (Optional[QuoteAndBuildSwapTransactionApproveTransactionEnum] = None): When "true", `signatureData` includes the spender address and approve calldata so the client can submit it before the swap. Defaults to false.
                     approve_amount (Optional[str] = None): Override approve amount (smallest unit, positive integer string). Defaults to the swap amount.
                     gas_limit (Optional[str] = None): Gas limit override (positive integer string). EVM only.
@@ -2910,8 +2909,7 @@ class Web3WalletRestAPI:
         """
         Get WebSocket Auth Token
 
-        Get a WebSocket auth token before connecting to the WebSocket stream service. For details on WebSocket usage, please refer to the [WebSocket documentation](/products/websocket-api/introduction).
-
+        Get a WebSocket auth token before connecting to the WebSocket stream service. For details on WebSocket usage, please refer to the WebSocket documentation.
 
         Args:
             recv_window (Optional[int] = None): Allowed time deviation in milliseconds (default: 5000, max: 60000).

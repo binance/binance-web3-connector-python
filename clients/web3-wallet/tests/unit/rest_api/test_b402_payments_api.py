@@ -17,7 +17,11 @@ from urllib.parse import parse_qs
 
 from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
-from binance_web3_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
+from binance_web3_common.utils import (
+    normalize_query_values,
+    is_one_of_model,
+    snake_to_camel,
+)
 
 from binance_sdk_web3_wallet.rest_api.api import B402PaymentsApi
 from binance_sdk_web3_wallet.rest_api.models import (
@@ -69,23 +73,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "kinds": [
-                    {
-                        "scheme": "exact",
-                        "network": "eip155:56",
-                        "extra": {
-                            "name": "Token Name",
-                            "version": "1",
-                            "facilitatorAddress": "0x3333333333333333333333333333333333333333",
-                        },
-                    }
-                ],
-                "extensions": [],
-                "signers": {
-                    "eip155:56": ["0x3333333333333333333333333333333333333333"]
-                },
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -142,23 +130,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "kinds": [
-                    {
-                        "scheme": "exact",
-                        "network": "eip155:56",
-                        "extra": {
-                            "name": "Token Name",
-                            "version": "1",
-                            "facilitatorAddress": "0x3333333333333333333333333333333333333333",
-                        },
-                    }
-                ],
-                "extensions": [],
-                "signers": {
-                    "eip155:56": ["0x3333333333333333333333333333333333333333"]
-                },
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -238,21 +210,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "kinds": [
-                    {
-                        "network": "eip155:56",
-                        "extra": {
-                            "name": "Token Name",
-                            "version": "1",
-                            "signerAddress": "0x3333333333333333333333333333333333333333",
-                            "spenderAddress": "0x4444444444444444444444444444444444444444",
-                        },
-                    }
-                ],
-                "extensions": [],
-                "signers": {"eip155:*": ["0x3333333333333333333333333333333333333333"]},
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -309,21 +267,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "kinds": [
-                    {
-                        "network": "eip155:56",
-                        "extra": {
-                            "name": "Token Name",
-                            "version": "1",
-                            "signerAddress": "0x3333333333333333333333333333333333333333",
-                            "spenderAddress": "0x4444444444444444444444444444444444444444",
-                        },
-                    }
-                ],
-                "extensions": [],
-                "signers": {"eip155:*": ["0x3333333333333333333333333333333333333333"]},
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -403,16 +347,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "success": True,
-                "transaction": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "payer": "0x5555555555555555555555555555555555555555",
-                "network": "eip155:56",
-                "amount": "1000000",
-                "confirmations": 1,
-                "errorReason": "errorReason",
-                "errorMessage": "errorMessage",
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -463,16 +398,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "success": True,
-                "transaction": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "payer": "0x5555555555555555555555555555555555555555",
-                "network": "eip155:56",
-                "amount": "1000000",
-                "confirmations": 1,
-                "errorReason": "errorReason",
-                "errorMessage": "errorMessage",
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -544,16 +470,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "success": True,
-                "transaction": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "payer": "0x5555555555555555555555555555555555555555",
-                "network": "eip155:56",
-                "amount": "1000000",
-                "errorReason": "errorReason",
-                "errorMessage": "errorMessage",
-                "extensions": {},
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -604,16 +521,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "success": True,
-                "transaction": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-                "payer": "0x5555555555555555555555555555555555555555",
-                "network": "eip155:56",
-                "amount": "1000000",
-                "errorReason": "errorReason",
-                "errorMessage": "errorMessage",
-                "extensions": {},
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -937,12 +845,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "isValid": True,
-                "payer": "0x5555555555555555555555555555555555555555",
-                "invalidReason": "invalid_payload",
-                "invalidMessage": "invalidMessage",
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }
@@ -1000,12 +903,7 @@ class TestB402PaymentsApi:
             "type": "GENERAL",
             "code": "000000000",
             "errorData": "errorData",
-            "data": {
-                "isValid": True,
-                "payer": "0x5555555555555555555555555555555555555555",
-                "invalidReason": "invalid_payload",
-                "invalidMessage": "invalidMessage",
-            },
+            "data": {},
             "subData": {},
             "params": {},
         }

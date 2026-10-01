@@ -15,34 +15,26 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List
+from binance_sdk_web3_wallet.rest_api.models.get_b402_supported_configurations_v2_response_data_kinds_inner_extra import (
+    GetB402SupportedConfigurationsV2ResponseDataKindsInnerExtra,
+)
+from typing import Optional, Set
 from typing_extensions import Self
 
 
-class SettleB402PaymentV1Response2(BaseModel):
+class GetB402SupportedConfigurationsV2ResponseDataKindsInner(BaseModel):
     """
-    SettleB402PaymentV1Response2
+    GetB402SupportedConfigurationsV2ResponseDataKindsInner
     """  # noqa: E501
 
-    status: Optional[StrictStr] = None
-    type: Optional[StrictStr] = None
-    code: Optional[StrictStr] = None
-    error_data: Optional[StrictStr] = Field(default=None, alias="errorData")
-    data: Optional[Dict[str, Any]] = None
-    sub_data: Optional[Dict[str, Any]] = Field(default=None, alias="subData")
-    params: Optional[Dict[str, Any]] = None
+    x402_version: StrictInt = Field(alias="x402Version")
+    scheme: StrictStr
+    network: StrictStr
+    extra: GetB402SupportedConfigurationsV2ResponseDataKindsInnerExtra
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "status",
-        "type",
-        "code",
-        "errorData",
-        "data",
-        "subData",
-        "params",
-    ]
+    __properties: ClassVar[List[str]] = ["x402Version", "scheme", "network", "extra"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -65,7 +57,7 @@ class SettleB402PaymentV1Response2(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SettleB402PaymentV1Response2 from a JSON string"""
+        """Create an instance of GetB402SupportedConfigurationsV2ResponseDataKindsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -90,36 +82,19 @@ class SettleB402PaymentV1Response2(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of extra
+        if self.extra:
+            _dict["extra"] = self.extra.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if error_data (nullable) is None
-        # and model_fields_set contains the field
-        if self.error_data is None and "error_data" in self.model_fields_set:
-            _dict["errorData"] = None
-
-        # set to None if data (nullable) is None
-        # and model_fields_set contains the field
-        if self.data is None and "data" in self.model_fields_set:
-            _dict["data"] = None
-
-        # set to None if sub_data (nullable) is None
-        # and model_fields_set contains the field
-        if self.sub_data is None and "sub_data" in self.model_fields_set:
-            _dict["subData"] = None
-
-        # set to None if params (nullable) is None
-        # and model_fields_set contains the field
-        if self.params is None and "params" in self.model_fields_set:
-            _dict["params"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SettleB402PaymentV1Response2 from a dict"""
+        """Create an instance of GetB402SupportedConfigurationsV2ResponseDataKindsInner from a dict"""
         if obj is None:
             return None
 
@@ -128,13 +103,16 @@ class SettleB402PaymentV1Response2(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "status": obj.get("status"),
-                "type": obj.get("type"),
-                "code": obj.get("code"),
-                "errorData": obj.get("errorData"),
-                "data": obj.get("data"),
-                "subData": obj.get("subData"),
-                "params": obj.get("params"),
+                "x402Version": obj.get("x402Version"),
+                "scheme": obj.get("scheme"),
+                "network": obj.get("network"),
+                "extra": (
+                    GetB402SupportedConfigurationsV2ResponseDataKindsInnerExtra.from_dict(
+                        obj["extra"]
+                    )
+                    if obj.get("extra") is not None
+                    else None
+                ),
             }
         )
         # store additional fields in additional_properties

@@ -11,142 +11,145 @@ Do not edit the class manually.
 """
 
 from __future__ import annotations
-import json
 import pprint
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    ValidationError,
-)
-from typing import Any, Optional
-from binance_sdk_web3_wallet.rest_api.models.get_b402_supported_configurations_v2_response1 import (
-    GetB402SupportedConfigurationsV2Response1,
-)
-from binance_sdk_web3_wallet.rest_api.models.get_b402_supported_configurations_v2_response2 import (
-    GetB402SupportedConfigurationsV2Response2,
-)
-from typing import Union, Set, Dict
-from typing_extensions import Self
+import re  # noqa: F401
+import json
 
-GETB402SUPPORTEDCONFIGURATIONSV2RESPONSE_ONE_OF_SCHEMAS = [
-    "GetB402SupportedConfigurationsV2Response1",
-    "GetB402SupportedConfigurationsV2Response2",
-]
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_web3_wallet.rest_api.models.get_b402_supported_configurations_v2_response_data import (
+    GetB402SupportedConfigurationsV2ResponseData,
+)
+from typing import Set
+from typing_extensions import Self
 
 
 class GetB402SupportedConfigurationsV2Response(BaseModel):
     """
     GetB402SupportedConfigurationsV2Response
-    """
+    """  # noqa: E501
 
-    # data type: GetB402SupportedConfigurationsV2Response1
-    oneof_schema_1_validator: Optional[GetB402SupportedConfigurationsV2Response1] = None
-    # data type: GetB402SupportedConfigurationsV2Response2
-    oneof_schema_2_validator: Optional[GetB402SupportedConfigurationsV2Response2] = None
-    actual_instance: Optional[
-        Union[
-            GetB402SupportedConfigurationsV2Response1,
-            GetB402SupportedConfigurationsV2Response2,
-        ]
-    ] = None
-    one_of_schemas: Set[str] = {
-        "GetB402SupportedConfigurationsV2Response1",
-        "GetB402SupportedConfigurationsV2Response2",
-    }
+    status: Optional[StrictStr] = None
+    type: Optional[StrictStr] = None
+    code: Optional[StrictStr] = None
+    error_data: Optional[StrictStr] = Field(default=None, alias="errorData")
+    data: Optional[GetB402SupportedConfigurationsV2ResponseData] = None
+    sub_data: Optional[Dict[str, Any]] = Field(default=None, alias="subData")
+    params: Optional[Dict[str, Any]] = None
+    additional_properties: Dict[str, Any] = {}
+    __properties: ClassVar[List[str]] = [
+        "status",
+        "type",
+        "code",
+        "errorData",
+        "data",
+        "subData",
+        "params",
+    ]
 
     model_config = ConfigDict(
+        populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
 
-    def __init__(self, *args, **kwargs) -> None:
-        if args:
-            if len(args) > 1:
-                raise ValueError(
-                    "If a position argument is used, only 1 is allowed to set `actual_instance`"
-                )
-            if kwargs:
-                raise ValueError(
-                    "If a position argument is used, keyword arguments cannot be used."
-                )
-            super().__init__(actual_instance=args[0])
-        else:
-            super().__init__(**kwargs)
-
-    @classmethod
-    def is_oneof_model(cls) -> bool:
-        return True
-
-    @classmethod
-    def from_dict(cls, parsed) -> Self:
-        """Returns the object represented by the json string"""
-        instance = cls.model_construct()
-        error_messages = []
-        matched = []
-
-        is_list = isinstance(parsed, list)
-
-        # deserialize data into GetB402SupportedConfigurationsV2Response1
-        if is_list == GetB402SupportedConfigurationsV2Response1.is_array():
-            try:
-                matched.append(
-                    GetB402SupportedConfigurationsV2Response1.from_dict(parsed)
-                )
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-        # deserialize data into GetB402SupportedConfigurationsV2Response2
-        if is_list == GetB402SupportedConfigurationsV2Response2.is_array():
-            try:
-                matched.append(
-                    GetB402SupportedConfigurationsV2Response2.from_dict(parsed)
-                )
-            except (ValidationError, ValueError) as e:
-                error_messages.append(str(e))
-
-        if not matched:
-            # no match
-            raise ValueError(
-                "No match found when deserializing the JSON string into GetB402SupportedConfigurationsV2Response with oneOf schemas: GetB402SupportedConfigurationsV2Response1, GetB402SupportedConfigurationsV2Response2. Details: "
-                + ", ".join(error_messages)
-            )
-
-        instance.actual_instance = matched[0]
-
-        return instance
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
 
     def to_json(self) -> str:
-        """Returns the JSON representation of the actual instance"""
-        if self.actual_instance is None:
-            return "null"
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
 
-        if hasattr(self.actual_instance, "to_json") and callable(
-            self.actual_instance.to_json
-        ):
-            return self.actual_instance.to_json()
-        else:
-            return json.dumps(self.actual_instance)
+    @classmethod
+    def is_array(cls) -> bool:
+        return False
 
-    def to_dict(
-        self,
-    ) -> Optional[
-        Union[
-            Dict[str, Any],
-            GetB402SupportedConfigurationsV2Response1,
-            GetB402SupportedConfigurationsV2Response2,
-        ]
-    ]:
-        """Returns the dict representation of the actual instance"""
-        if self.actual_instance is None:
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of GetB402SupportedConfigurationsV2Response from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
+        """
+        excluded_fields: Set[str] = set(
+            [
+                "additional_properties",
+            ]
+        )
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict["data"] = self.data.to_dict()
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
+        # set to None if error_data (nullable) is None
+        # and model_fields_set contains the field
+        if self.error_data is None and "error_data" in self.model_fields_set:
+            _dict["errorData"] = None
+
+        # set to None if data (nullable) is None
+        # and model_fields_set contains the field
+        if self.data is None and "data" in self.model_fields_set:
+            _dict["data"] = None
+
+        # set to None if sub_data (nullable) is None
+        # and model_fields_set contains the field
+        if self.sub_data is None and "sub_data" in self.model_fields_set:
+            _dict["subData"] = None
+
+        # set to None if params (nullable) is None
+        # and model_fields_set contains the field
+        if self.params is None and "params" in self.model_fields_set:
+            _dict["params"] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of GetB402SupportedConfigurationsV2Response from a dict"""
+        if obj is None:
             return None
 
-        if hasattr(self.actual_instance, "to_dict") and callable(
-            self.actual_instance.to_dict
-        ):
-            return self.actual_instance.to_dict()
-        else:
-            # primitive type
-            return self.actual_instance
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
 
-    def to_str(self) -> str:
-        """Returns the string representation of the actual instance"""
-        return pprint.pformat(self.model_dump())
+        _obj = cls.model_validate(
+            {
+                "status": obj.get("status"),
+                "type": obj.get("type"),
+                "code": obj.get("code"),
+                "errorData": obj.get("errorData"),
+                "data": (
+                    GetB402SupportedConfigurationsV2ResponseData.from_dict(obj["data"])
+                    if obj.get("data") not in (None, {})
+                    else None
+                ),
+                "subData": obj.get("subData"),
+                "params": obj.get("params"),
+            }
+        )
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
+        return _obj

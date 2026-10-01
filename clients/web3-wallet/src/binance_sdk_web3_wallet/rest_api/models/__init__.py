@@ -427,38 +427,26 @@ from .get_all_token_balances_by_address_response_data_inner_token_assets_inner i
 from .get_b402_supported_configurations_v1_response import (
     GetB402SupportedConfigurationsV1Response as GetB402SupportedConfigurationsV1Response,
 )
-from .get_b402_supported_configurations_v1_response1 import (
-    GetB402SupportedConfigurationsV1Response1 as GetB402SupportedConfigurationsV1Response1,
+from .get_b402_supported_configurations_v1_response_data import (
+    GetB402SupportedConfigurationsV1ResponseData as GetB402SupportedConfigurationsV1ResponseData,
 )
-from .get_b402_supported_configurations_v1_response1_data import (
-    GetB402SupportedConfigurationsV1Response1Data as GetB402SupportedConfigurationsV1Response1Data,
+from .get_b402_supported_configurations_v1_response_data_kinds_inner import (
+    GetB402SupportedConfigurationsV1ResponseDataKindsInner as GetB402SupportedConfigurationsV1ResponseDataKindsInner,
 )
-from .get_b402_supported_configurations_v1_response1_data_kinds_inner import (
-    GetB402SupportedConfigurationsV1Response1DataKindsInner as GetB402SupportedConfigurationsV1Response1DataKindsInner,
-)
-from .get_b402_supported_configurations_v1_response1_data_kinds_inner_extra import (
-    GetB402SupportedConfigurationsV1Response1DataKindsInnerExtra as GetB402SupportedConfigurationsV1Response1DataKindsInnerExtra,
-)
-from .get_b402_supported_configurations_v1_response2 import (
-    GetB402SupportedConfigurationsV1Response2 as GetB402SupportedConfigurationsV1Response2,
+from .get_b402_supported_configurations_v1_response_data_kinds_inner_extra import (
+    GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra as GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra,
 )
 from .get_b402_supported_configurations_v2_response import (
     GetB402SupportedConfigurationsV2Response as GetB402SupportedConfigurationsV2Response,
 )
-from .get_b402_supported_configurations_v2_response1 import (
-    GetB402SupportedConfigurationsV2Response1 as GetB402SupportedConfigurationsV2Response1,
+from .get_b402_supported_configurations_v2_response_data import (
+    GetB402SupportedConfigurationsV2ResponseData as GetB402SupportedConfigurationsV2ResponseData,
 )
-from .get_b402_supported_configurations_v2_response1_data import (
-    GetB402SupportedConfigurationsV2Response1Data as GetB402SupportedConfigurationsV2Response1Data,
+from .get_b402_supported_configurations_v2_response_data_kinds_inner import (
+    GetB402SupportedConfigurationsV2ResponseDataKindsInner as GetB402SupportedConfigurationsV2ResponseDataKindsInner,
 )
-from .get_b402_supported_configurations_v2_response1_data_kinds_inner import (
-    GetB402SupportedConfigurationsV2Response1DataKindsInner as GetB402SupportedConfigurationsV2Response1DataKindsInner,
-)
-from .get_b402_supported_configurations_v2_response1_data_kinds_inner_extra import (
-    GetB402SupportedConfigurationsV2Response1DataKindsInnerExtra as GetB402SupportedConfigurationsV2Response1DataKindsInnerExtra,
-)
-from .get_b402_supported_configurations_v2_response2 import (
-    GetB402SupportedConfigurationsV2Response2 as GetB402SupportedConfigurationsV2Response2,
+from .get_b402_supported_configurations_v2_response_data_kinds_inner_extra import (
+    GetB402SupportedConfigurationsV2ResponseDataKindsInnerExtra as GetB402SupportedConfigurationsV2ResponseDataKindsInnerExtra,
 )
 from .get_broadcast_orders_response import (
     GetBroadcastOrdersResponse as GetBroadcastOrdersResponse,
@@ -883,26 +871,14 @@ from .search_token_response_data_inner import (
 from .settle_b402_payment_v1_response import (
     SettleB402PaymentV1Response as SettleB402PaymentV1Response,
 )
-from .settle_b402_payment_v1_response1 import (
-    SettleB402PaymentV1Response1 as SettleB402PaymentV1Response1,
-)
-from .settle_b402_payment_v1_response1_data import (
-    SettleB402PaymentV1Response1Data as SettleB402PaymentV1Response1Data,
-)
-from .settle_b402_payment_v1_response2 import (
-    SettleB402PaymentV1Response2 as SettleB402PaymentV1Response2,
+from .settle_b402_payment_v1_response_data import (
+    SettleB402PaymentV1ResponseData as SettleB402PaymentV1ResponseData,
 )
 from .settle_b402_payment_v2_response import (
     SettleB402PaymentV2Response as SettleB402PaymentV2Response,
 )
-from .settle_b402_payment_v2_response1 import (
-    SettleB402PaymentV2Response1 as SettleB402PaymentV2Response1,
-)
-from .settle_b402_payment_v2_response1_data import (
-    SettleB402PaymentV2Response1Data as SettleB402PaymentV2Response1Data,
-)
-from .settle_b402_payment_v2_response2 import (
-    SettleB402PaymentV2Response2 as SettleB402PaymentV2Response2,
+from .settle_b402_payment_v2_response_data import (
+    SettleB402PaymentV2ResponseData as SettleB402PaymentV2ResponseData,
 )
 from .simulate_transactions_request_evm_tx import (
     SimulateTransactionsRequestEvmTx as SimulateTransactionsRequestEvmTx,
@@ -990,14 +966,8 @@ from .verify_b402_payment_v2_request_body_payment_payload_resource import (
 from .verify_b402_payment_v2_response import (
     VerifyB402PaymentV2Response as VerifyB402PaymentV2Response,
 )
-from .verify_b402_payment_v2_response1 import (
-    VerifyB402PaymentV2Response1 as VerifyB402PaymentV2Response1,
-)
-from .verify_b402_payment_v2_response1_data import (
-    VerifyB402PaymentV2Response1Data as VerifyB402PaymentV2Response1Data,
-)
-from .verify_b402_payment_v2_response2 import (
-    VerifyB402PaymentV2Response2 as VerifyB402PaymentV2Response2,
+from .verify_b402_payment_v2_response_data import (
+    VerifyB402PaymentV2ResponseData as VerifyB402PaymentV2ResponseData,
 )
 from .enums import (
     GetAddressPortfolioOverviewTimeFrameEnum as GetAddressPortfolioOverviewTimeFrameEnum,

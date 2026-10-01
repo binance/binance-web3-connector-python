@@ -31,7 +31,7 @@ class ProtocolResp(BaseModel):
 
     binance_chain_id: Optional[StrictStr] = Field(
         default=None,
-        description='Binance chain ID (e.g. "56"=BSC).',
+        description="Binance chain ID. Plain numeric string for EVM chains — see Supported Chains & Protocols for the supported values.",
         alias="binanceChainId",
     )
     defi_protocol_id: Optional[StrictStr] = Field(

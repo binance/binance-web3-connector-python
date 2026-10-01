@@ -17,7 +17,11 @@ from urllib.parse import parse_qs
 
 from binance_web3_common.configuration import ConfigurationRestAPI
 from binance_common.errors import RequiredError
-from binance_web3_common.utils import normalize_query_values, is_one_of_model, snake_to_camel
+from binance_web3_common.utils import (
+    normalize_query_values,
+    is_one_of_model,
+    snake_to_camel,
+)
 
 from binance_sdk_web3_wallet.rest_api.api import DefiDataApi
 from binance_sdk_web3_wallet.rest_api.models import GetDeFiPositionsResponse
@@ -622,7 +626,7 @@ class TestDefiDataApi:
                 "description": "PancakeSwap is a decentralized exchange (DEX) built on BNB Chain that utilizes an automated market making (AMM) system.",
                 "websiteUrl": "https://pancakeswap.finance/",
                 "investType": ["LiquidityPool"],
-                "supportedChains": ["56"],
+                "supportedChains": ["56", "1"],
                 "tvl": "290233074",
                 "tags": ["DeFi", "DEX"],
                 "founded": "2020",
@@ -735,7 +739,7 @@ class TestDefiDataApi:
                 "description": "PancakeSwap is a decentralized exchange (DEX) built on BNB Chain that utilizes an automated market making (AMM) system.",
                 "websiteUrl": "https://pancakeswap.finance/",
                 "investType": ["LiquidityPool"],
-                "supportedChains": ["56"],
+                "supportedChains": ["56", "1"],
                 "tvl": "290233074",
                 "tags": ["DeFi", "DEX"],
                 "founded": "2020",
@@ -1056,7 +1060,7 @@ class TestDefiDataApi:
                         "apyBps": 1235,
                         "apyDisplay": "12.35%",
                         "investType": ["Earn", "LiquidityPool"],
-                        "supportedChains": ["56"],
+                        "supportedChains": ["56", "1"],
                     }
                 ],
             },
@@ -1130,7 +1134,7 @@ class TestDefiDataApi:
                         "apyBps": 1235,
                         "apyDisplay": "12.35%",
                         "investType": ["Earn", "LiquidityPool"],
-                        "supportedChains": ["56"],
+                        "supportedChains": ["56", "1"],
                     }
                 ],
             },

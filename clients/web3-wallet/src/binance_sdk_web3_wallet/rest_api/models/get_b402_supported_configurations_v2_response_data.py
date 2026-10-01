@@ -15,36 +15,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Set
+from pydantic import BaseModel, ConfigDict, StrictStr
+from typing import Any, ClassVar, Dict, List
+from binance_sdk_web3_wallet.rest_api.models.get_b402_supported_configurations_v2_response_data_kinds_inner import (
+    GetB402SupportedConfigurationsV2ResponseDataKindsInner,
+)
+from typing import Optional, Set
 from typing_extensions import Self
 
 
-class SettleB402PaymentV2Response1Data(BaseModel):
+class GetB402SupportedConfigurationsV2ResponseData(BaseModel):
     """
-    SettleB402PaymentV2Response1Data
+    GetB402SupportedConfigurationsV2ResponseData
     """  # noqa: E501
 
-    success: StrictBool
-    transaction: StrictStr
-    payer: Optional[StrictStr] = None
-    network: StrictStr
-    amount: Optional[StrictStr] = None
-    error_reason: Optional[StrictStr] = Field(default=None, alias="errorReason")
-    error_message: Optional[StrictStr] = Field(default=None, alias="errorMessage")
-    extensions: Optional[Dict[str, Any]] = None
+    kinds: List[GetB402SupportedConfigurationsV2ResponseDataKindsInner]
+    extensions: List[StrictStr]
+    signers: Dict[str, List[StrictStr]]
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "success",
-        "transaction",
-        "payer",
-        "network",
-        "amount",
-        "errorReason",
-        "errorMessage",
-        "extensions",
-    ]
+    __properties: ClassVar[List[str]] = ["kinds", "extensions", "signers"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -67,7 +56,7 @@ class SettleB402PaymentV2Response1Data(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SettleB402PaymentV2Response1Data from a JSON string"""
+        """Create an instance of GetB402SupportedConfigurationsV2ResponseData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -92,31 +81,23 @@ class SettleB402PaymentV2Response1Data(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in kinds (list)
+        _items = []
+        if self.kinds:
+            for _item_kinds in self.kinds:
+                if _item_kinds:
+                    _items.append(_item_kinds.to_dict())
+            _dict["kinds"] = _items
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if payer (nullable) is None
-        # and model_fields_set contains the field
-        if self.payer is None and "payer" in self.model_fields_set:
-            _dict["payer"] = None
-
-        # set to None if error_reason (nullable) is None
-        # and model_fields_set contains the field
-        if self.error_reason is None and "error_reason" in self.model_fields_set:
-            _dict["errorReason"] = None
-
-        # set to None if error_message (nullable) is None
-        # and model_fields_set contains the field
-        if self.error_message is None and "error_message" in self.model_fields_set:
-            _dict["errorMessage"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SettleB402PaymentV2Response1Data from a dict"""
+        """Create an instance of GetB402SupportedConfigurationsV2ResponseData from a dict"""
         if obj is None:
             return None
 
@@ -125,14 +106,18 @@ class SettleB402PaymentV2Response1Data(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "success": obj.get("success"),
-                "transaction": obj.get("transaction"),
-                "payer": obj.get("payer"),
-                "network": obj.get("network"),
-                "amount": obj.get("amount"),
-                "errorReason": obj.get("errorReason"),
-                "errorMessage": obj.get("errorMessage"),
+                "kinds": (
+                    [
+                        GetB402SupportedConfigurationsV2ResponseDataKindsInner.from_dict(
+                            _item
+                        )
+                        for _item in obj["kinds"]
+                    ]
+                    if obj.get("kinds") is not None
+                    else None
+                ),
                 "extensions": obj.get("extensions"),
+                "signers": obj.get("signers"),
             }
         )
         # store additional fields in additional_properties

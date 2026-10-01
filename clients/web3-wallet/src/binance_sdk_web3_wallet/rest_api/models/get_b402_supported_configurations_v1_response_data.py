@@ -16,22 +16,22 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
-from binance_sdk_web3_wallet.rest_api.models.get_b402_supported_configurations_v2_response1_data_kinds_inner import (
-    GetB402SupportedConfigurationsV2Response1DataKindsInner,
+from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_web3_wallet.rest_api.models.get_b402_supported_configurations_v1_response_data_kinds_inner import (
+    GetB402SupportedConfigurationsV1ResponseDataKindsInner,
 )
-from typing import Optional, Set
+from typing import Set
 from typing_extensions import Self
 
 
-class GetB402SupportedConfigurationsV2Response1Data(BaseModel):
+class GetB402SupportedConfigurationsV1ResponseData(BaseModel):
     """
-    GetB402SupportedConfigurationsV2Response1Data
+    GetB402SupportedConfigurationsV1ResponseData
     """  # noqa: E501
 
-    kinds: List[GetB402SupportedConfigurationsV2Response1DataKindsInner]
-    extensions: List[StrictStr]
-    signers: Dict[str, List[StrictStr]]
+    kinds: Optional[List[GetB402SupportedConfigurationsV1ResponseDataKindsInner]] = None
+    extensions: Optional[List[StrictStr]] = None
+    signers: Optional[Dict[str, List[StrictStr]]] = None
     additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["kinds", "extensions", "signers"]
 
@@ -56,7 +56,7 @@ class GetB402SupportedConfigurationsV2Response1Data(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetB402SupportedConfigurationsV2Response1Data from a JSON string"""
+        """Create an instance of GetB402SupportedConfigurationsV1ResponseData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -97,7 +97,7 @@ class GetB402SupportedConfigurationsV2Response1Data(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetB402SupportedConfigurationsV2Response1Data from a dict"""
+        """Create an instance of GetB402SupportedConfigurationsV1ResponseData from a dict"""
         if obj is None:
             return None
 
@@ -108,7 +108,7 @@ class GetB402SupportedConfigurationsV2Response1Data(BaseModel):
             {
                 "kinds": (
                     [
-                        GetB402SupportedConfigurationsV2Response1DataKindsInner.from_dict(
+                        GetB402SupportedConfigurationsV1ResponseDataKindsInner.from_dict(
                             _item
                         )
                         for _item in obj["kinds"]

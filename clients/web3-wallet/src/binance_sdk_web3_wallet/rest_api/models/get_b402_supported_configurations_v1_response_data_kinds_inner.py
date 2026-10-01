@@ -15,36 +15,26 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from binance_sdk_web3_wallet.rest_api.models.get_b402_supported_configurations_v1_response_data_kinds_inner_extra import (
+    GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra,
+)
 from typing import Set
 from typing_extensions import Self
 
 
-class SettleB402PaymentV1Response1Data(BaseModel):
+class GetB402SupportedConfigurationsV1ResponseDataKindsInner(BaseModel):
     """
-    SettleB402PaymentV1Response1Data
+    GetB402SupportedConfigurationsV1ResponseDataKindsInner
     """  # noqa: E501
 
-    success: StrictBool
-    transaction: Optional[StrictStr] = None
-    payer: Optional[StrictStr] = None
+    x402_version: Optional[StrictInt] = Field(default=None, alias="x402Version")
+    scheme: Optional[StrictStr] = None
     network: Optional[StrictStr] = None
-    amount: Optional[StrictStr] = None
-    confirmations: Optional[StrictInt] = None
-    error_reason: Optional[StrictStr] = Field(default=None, alias="errorReason")
-    error_message: Optional[StrictStr] = Field(default=None, alias="errorMessage")
+    extra: Optional[GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra] = None
     additional_properties: Dict[str, Any] = {}
-    __properties: ClassVar[List[str]] = [
-        "success",
-        "transaction",
-        "payer",
-        "network",
-        "amount",
-        "confirmations",
-        "errorReason",
-        "errorMessage",
-    ]
+    __properties: ClassVar[List[str]] = ["x402Version", "scheme", "network", "extra"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -67,7 +57,7 @@ class SettleB402PaymentV1Response1Data(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SettleB402PaymentV1Response1Data from a JSON string"""
+        """Create an instance of GetB402SupportedConfigurationsV1ResponseDataKindsInner from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -92,51 +82,19 @@ class SettleB402PaymentV1Response1Data(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of extra
+        if self.extra:
+            _dict["extra"] = self.extra.to_dict()
         # puts key-value pairs in additional_properties in the top level
         if self.additional_properties is not None:
             for _key, _value in self.additional_properties.items():
                 _dict[_key] = _value
 
-        # set to None if transaction (nullable) is None
-        # and model_fields_set contains the field
-        if self.transaction is None and "transaction" in self.model_fields_set:
-            _dict["transaction"] = None
-
-        # set to None if payer (nullable) is None
-        # and model_fields_set contains the field
-        if self.payer is None and "payer" in self.model_fields_set:
-            _dict["payer"] = None
-
-        # set to None if network (nullable) is None
-        # and model_fields_set contains the field
-        if self.network is None and "network" in self.model_fields_set:
-            _dict["network"] = None
-
-        # set to None if amount (nullable) is None
-        # and model_fields_set contains the field
-        if self.amount is None and "amount" in self.model_fields_set:
-            _dict["amount"] = None
-
-        # set to None if confirmations (nullable) is None
-        # and model_fields_set contains the field
-        if self.confirmations is None and "confirmations" in self.model_fields_set:
-            _dict["confirmations"] = None
-
-        # set to None if error_reason (nullable) is None
-        # and model_fields_set contains the field
-        if self.error_reason is None and "error_reason" in self.model_fields_set:
-            _dict["errorReason"] = None
-
-        # set to None if error_message (nullable) is None
-        # and model_fields_set contains the field
-        if self.error_message is None and "error_message" in self.model_fields_set:
-            _dict["errorMessage"] = None
-
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SettleB402PaymentV1Response1Data from a dict"""
+        """Create an instance of GetB402SupportedConfigurationsV1ResponseDataKindsInner from a dict"""
         if obj is None:
             return None
 
@@ -145,14 +103,16 @@ class SettleB402PaymentV1Response1Data(BaseModel):
 
         _obj = cls.model_validate(
             {
-                "success": obj.get("success"),
-                "transaction": obj.get("transaction"),
-                "payer": obj.get("payer"),
+                "x402Version": obj.get("x402Version"),
+                "scheme": obj.get("scheme"),
                 "network": obj.get("network"),
-                "amount": obj.get("amount"),
-                "confirmations": obj.get("confirmations"),
-                "errorReason": obj.get("errorReason"),
-                "errorMessage": obj.get("errorMessage"),
+                "extra": (
+                    GetB402SupportedConfigurationsV1ResponseDataKindsInnerExtra.from_dict(
+                        obj["extra"]
+                    )
+                    if obj.get("extra") is not None
+                    else None
+                ),
             }
         )
         # store additional fields in additional_properties
