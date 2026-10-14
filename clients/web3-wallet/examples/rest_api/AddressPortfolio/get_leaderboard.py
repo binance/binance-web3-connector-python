@@ -9,7 +9,6 @@ from binance_sdk_web3_wallet.web3_wallet import (
 from binance_sdk_web3_wallet.rest_api.models import GetLeaderboardTimeFrameEnum
 from binance_sdk_web3_wallet.rest_api.models import GetLeaderboardSortByEnum
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

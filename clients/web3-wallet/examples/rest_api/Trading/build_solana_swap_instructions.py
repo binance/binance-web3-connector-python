@@ -10,7 +10,6 @@ from binance_sdk_web3_wallet.rest_api.models import (
     BuildSolanaSwapInstructionsBinanceChainIdEnum,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

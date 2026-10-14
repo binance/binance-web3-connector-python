@@ -17,14 +17,14 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from binance_sdk_web3_wallet.rest_api.models.build_swap_transaction_response_data_router_result import (
-    BuildSwapTransactionResponseDataRouterResult,
-)
 from binance_sdk_web3_wallet.rest_api.models.build_swap_transaction_response_data_tx import (
     BuildSwapTransactionResponseDataTx,
 )
 from binance_sdk_web3_wallet.rest_api.models.quote_and_build_swap_transaction_response_data_rfq import (
     QuoteAndBuildSwapTransactionResponseDataRfq,
+)
+from binance_sdk_web3_wallet.rest_api.models.quote_and_build_swap_transaction_response_data_router_result import (
+    QuoteAndBuildSwapTransactionResponseDataRouterResult,
 )
 from typing import Set
 from typing_extensions import Self
@@ -35,8 +35,8 @@ class QuoteAndBuildSwapTransactionResponseData(BaseModel):
     QuoteAndBuildSwapTransactionResponseData
     """  # noqa: E501
 
-    router_result: Optional[BuildSwapTransactionResponseDataRouterResult] = Field(
-        default=None, alias="routerResult"
+    router_result: Optional[QuoteAndBuildSwapTransactionResponseDataRouterResult] = (
+        Field(default=None, alias="routerResult")
     )
     tx: Optional[BuildSwapTransactionResponseDataTx] = None
     execution_mode: Optional[StrictStr] = Field(
@@ -127,7 +127,7 @@ class QuoteAndBuildSwapTransactionResponseData(BaseModel):
         _obj = cls.model_validate(
             {
                 "routerResult": (
-                    BuildSwapTransactionResponseDataRouterResult.from_dict(
+                    QuoteAndBuildSwapTransactionResponseDataRouterResult.from_dict(
                         obj["routerResult"]
                     )
                     if obj.get("routerResult") is not None

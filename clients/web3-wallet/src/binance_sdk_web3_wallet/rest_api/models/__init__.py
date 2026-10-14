@@ -857,6 +857,12 @@ from .quote_and_build_swap_transaction_response_data import (
 from .quote_and_build_swap_transaction_response_data_rfq import (
     QuoteAndBuildSwapTransactionResponseDataRfq as QuoteAndBuildSwapTransactionResponseDataRfq,
 )
+from .quote_and_build_swap_transaction_response_data_router_result import (
+    QuoteAndBuildSwapTransactionResponseDataRouterResult as QuoteAndBuildSwapTransactionResponseDataRouterResult,
+)
+from .quote_and_build_swap_transaction_response_data_router_result_dex_router_list_inner import (
+    QuoteAndBuildSwapTransactionResponseDataRouterResultDexRouterListInner as QuoteAndBuildSwapTransactionResponseDataRouterResultDexRouterListInner,
+)
 from .search_rwa_token_response import SearchRwaTokenResponse as SearchRwaTokenResponse
 from .search_rwa_token_response_data_inner import (
     SearchRwaTokenResponseDataInner as SearchRwaTokenResponseDataInner,

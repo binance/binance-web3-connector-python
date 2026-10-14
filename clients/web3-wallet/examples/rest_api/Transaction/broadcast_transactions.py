@@ -7,7 +7,6 @@ from binance_sdk_web3_wallet.web3_wallet import (
     WEB3_WALLET_REST_API_PROD_URL,
 )
 
-
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 

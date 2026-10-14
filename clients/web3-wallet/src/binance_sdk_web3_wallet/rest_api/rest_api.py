@@ -2340,6 +2340,7 @@ class Web3WalletRestAPI:
         nonce: Optional[str] = None,
         slippage_percent: Optional[str] = None,
         exclude_dexes: Optional[str] = None,
+        exclude_pools: Optional[str] = None,
         enable_rfq: Optional[QuoteAndBuildSwapTransactionEnableRfqEnum] = None,
         approve_transaction: Optional[
             QuoteAndBuildSwapTransactionApproveTransactionEnum
@@ -2380,6 +2381,7 @@ class Web3WalletRestAPI:
 
         `"0.5"` means 0.5% maximum slippage. When `autoSlippage=true` this field is overridden by the auto-computed value.
                     exclude_dexes (Optional[str] = None): Comma-separated list of DEXes to exclude from routing. Pass the `dexName` values returned in the response `routerResult.dexRouterList` as-is (e.g. `"Pancakeswap V4,Pancakeswap V3"`). On EVM/Sui/Tron chains they are normalized automatically; on Solana the value is case-sensitive and must match the response exactly. Omit or leave empty to exclude nothing.
+                    exclude_pools (Optional[str] = None): Comma-separated list of liquidity pool identifiers to exclude from routing (block specific pools). Only effective when `vendor=LiquidMesh` — passed through to the LiquidMesh Flash API `excludePools` parameter. Pool identifier format: V2/V3 pools use the `0x` + 40-hex contract address, V4/Infinity pools use the `0x` + 64-hex poolId (`0x` prefix optional, case-insensitive). Values are trimmed, deduped and passed through as-is; the server only enforces a length cap (2000 chars), invalid values are rejected by the gateway. Omit or leave empty to exclude nothing (behavior unchanged).
                     enable_rfq (Optional[QuoteAndBuildSwapTransactionEnableRfqEnum] = None): Whether to enable RFQ liquidity sources for routing. Default depends on the token pair: **BStock pairs default to `"true"` (RFQ enabled)**; all other tokens default to `"false"` (RFQ disabled, AMM-only routing). An explicit value always overrides the default. `"true"` may return better pricing, but the returned calldata may embed RFQ settlements with a short (~30s) deadline.
                     approve_transaction (Optional[QuoteAndBuildSwapTransactionApproveTransactionEnum] = None): When "true", `signatureData` includes the spender address and approve calldata so the client can submit it before the swap. Defaults to false.
                     approve_amount (Optional[str] = None): Override approve amount (smallest unit, positive integer string). Defaults to the swap amount.
@@ -2418,6 +2420,7 @@ class Web3WalletRestAPI:
             nonce,
             slippage_percent,
             exclude_dexes,
+            exclude_pools,
             enable_rfq,
             approve_transaction,
             approve_amount,

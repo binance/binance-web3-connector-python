@@ -1,5 +1,24 @@
 # Changelog
 
+## 9.0.0 - 2026-10-14
+
+### Changed (3)
+
+#### REST API
+
+- Added parameter `exclude_pools`
+  - affected methods:
+    - `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`)
+- Modified response for `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`):
+  - `data`.`routerResult`.`dexRouterList`.items: property `poolAddress` added
+  - `data`.`routerResult`.`dexRouterList`.items: item property `poolAddress` added
+
+- Modified response field `data`:
+  - `routerResult`.`dexRouterList`.items: property `poolAddress` added
+  - `routerResult`.`dexRouterList`.items: item property `poolAddress` added
+  - affected events:
+    - `quoteAndBuildSwapTransactionResponse`
+
 ## 8.0.0 - 2026-10-01
 
 ### Changed (220)

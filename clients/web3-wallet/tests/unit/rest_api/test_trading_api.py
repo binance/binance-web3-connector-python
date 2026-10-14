@@ -1964,6 +1964,7 @@ class TestTradingApi:
                                 "tokenSymbol": "BTCB",
                             },
                             "toTokenIndex": "1",
+                            "poolAddress": "0x1fb9d973a8381752611a4e17d0de21ff95a1dbd5",
                         }
                     ],
                     "fromToken": {
@@ -2089,6 +2090,7 @@ class TestTradingApi:
             "nonce": "unique-nonce-string",
             "slippage_percent": "0.5",
             "exclude_dexes": "Pancakeswap V4,Pancakeswap V3",
+            "exclude_pools": "0x1fb9d973a8381752611a4e17d0de21ff95a1dbd5",
             "enable_rfq": QuoteAndBuildSwapTransactionEnableRfqEnum["TRUE"].value,
             "approve_transaction": QuoteAndBuildSwapTransactionApproveTransactionEnum[
                 "TRUE"
@@ -2136,6 +2138,7 @@ class TestTradingApi:
                                 "tokenSymbol": "BTCB",
                             },
                             "toTokenIndex": "1",
+                            "poolAddress": "0x1fb9d973a8381752611a4e17d0de21ff95a1dbd5",
                         }
                     ],
                     "fromToken": {
