@@ -56,11 +56,13 @@ class BuildSwapTransactionResponseDataRouterResult(BaseModel):
         alias="toTokenAmount",
     )
     trade_fee: Optional[StrictStr] = Field(
-        default=None, description="Estimated network fee in USD.", alias="tradeFee"
+        default=None,
+        description="Estimated network fee in USD. Note: this is an estimate for reference only and may be inaccurate. For accurate gas values, use the Transaction API `GET /api/v1/dex/pre-transaction/gas-price` and `POST /api/v1/dex/pre-transaction/gas-limit`.",
+        alias="tradeFee",
     )
     estimate_gas_fee: Optional[StrictStr] = Field(
         default=None,
-        description="Estimated gas in the chain's smallest unit (e.g. wei).",
+        description="Estimated gas in the chain's smallest unit (e.g. wei). Note: this is an estimate for reference only and may be inaccurate. For accurate gas values, use the Transaction API `GET /api/v1/dex/pre-transaction/gas-price` and `POST /api/v1/dex/pre-transaction/gas-limit`.",
         alias="estimateGasFee",
     )
     router: Optional[StrictStr] = Field(

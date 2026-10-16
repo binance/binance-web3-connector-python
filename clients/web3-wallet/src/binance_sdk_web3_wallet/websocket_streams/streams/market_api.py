@@ -49,7 +49,7 @@ class MarketApi:
 
             Args:
                     bar (Union[str, None]): K-line interval. Enum: 1s, 5s, 30s, 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 8h, 12h, 1d, 3d, 1w, 1M.
-                    chain_id (Union[str, None]): Chain identifier, e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana. Full supported-chain list: same as the ["supported/chain"](/catalog/web3-wallet/api/rest-api/general-data#get-supported-chains) endpoint.
+                    chain_id (Union[str, None]): Chain identifier, e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana. Full supported-chain list: same as the "supported/chain" endpoint.
                     contract_address (Union[str, None]): Token contract address.
                     id (Optional[str] = None): Unique WebSocket request ID.
 
@@ -110,7 +110,7 @@ class MarketApi:
         Update Speed: Real-time
 
             Args:
-                    chain_id (Union[str, None]): Chain identifier, e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana. Full supported-chain list: same as the ["supported/chain"](/catalog/web3-wallet/api/rest-api/general-data#get-supported-chains) endpoint.
+                    chain_id (Union[str, None]): Chain identifier, e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana. Full supported-chain list: same as the "supported/chain" endpoint.
                     contract_address (Union[str, None]): Token contract address.
                     id (Optional[str] = None): Unique WebSocket request ID.
 
@@ -166,7 +166,7 @@ class MarketApi:
         Update Speed: Real-time
 
             Args:
-                    chain_id (Union[str, None]): Chain identifier, e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana. Full supported-chain list: same as the ["supported/chain"](/catalog/web3-wallet/api/rest-api/general-data#get-supported-chains) endpoint.
+                    chain_id (Union[str, None]): Chain identifier, e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana. Full supported-chain list: same as the "supported/chain" endpoint.
                     contract_address (Union[str, None]): Token contract address.
                     id (Optional[str] = None): Unique WebSocket request ID.
 
@@ -220,7 +220,7 @@ class MarketApi:
         Update Speed: Real-time
 
             Args:
-                    chain_id (Union[str, None]): Chain identifier, e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana. Full supported-chain list: same as the ["supported/chain"](/catalog/web3-wallet/api/rest-api/general-data#get-supported-chains) endpoint.
+                    chain_id (Union[str, None]): Chain identifier, e.g. "1"=Ethereum, "56"=BSC, "CT_501"=Solana. Full supported-chain list: same as the "supported/chain" endpoint.
                     contract_address (Union[str, None]): Token contract address.
                     id (Optional[str] = None): Unique WebSocket request ID.
 

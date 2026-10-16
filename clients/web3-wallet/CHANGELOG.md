@@ -1,6 +1,22 @@
 # Changelog
 
-## 9.0.0 - 2026-10-14
+## 10.0.0 - 2026-10-16
+
+### Changed (2)
+
+#### REST API
+
+- Updated descriptions of gas-related response fields (`tradeFee`, `estimateGasFee`, `gas`, `gasPrice`, `maxPriorityFeePerGas`) to note they are estimates and to point to `GET /api/v1/dex/pre-transaction/gas-price` and `POST /api/v1/dex/pre-transaction/gas-limit` for accurate values
+  - affected methods:
+    - `build_swap_transaction()` (`GET /api/v1/dex/aggregator/swap`)
+    - `get_aggregated_quote()` (`GET /api/v1/dex/aggregator/quote`)
+    - `quote_and_build_swap_transaction()` (`GET /api/v1/dex/aggregator/quote-and-swap`)
+
+#### WebSocket Streams
+
+- Updated `chain_id` parameter description (removed internal documentation link)
+
+## 9.0.0 - 2026-10-16
 
 ### Changed (3)
 

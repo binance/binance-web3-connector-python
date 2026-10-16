@@ -40,13 +40,18 @@ class BuildSwapTransactionResponseDataTx(BaseModel):
         default=None,
         description='Native-token amount sent with the transaction (wei). "0" for ERC-20 swaps.',
     )
-    gas: Optional[StrictStr] = Field(default=None, description="Gas limit estimate.")
+    gas: Optional[StrictStr] = Field(
+        default=None,
+        description="Gas limit estimate. Note: this is an estimate for reference only and may be inaccurate. For accurate gas values, use the Transaction API `GET /api/v1/dex/pre-transaction/gas-price` and `POST /api/v1/dex/pre-transaction/gas-limit`.",
+    )
     gas_price: Optional[StrictStr] = Field(
-        default=None, description="Gas price (wei).", alias="gasPrice"
+        default=None,
+        description="Gas price (wei). Note: this is an estimate for reference only and may be inaccurate. For accurate gas values, use the Transaction API `GET /api/v1/dex/pre-transaction/gas-price` and `POST /api/v1/dex/pre-transaction/gas-limit`.",
+        alias="gasPrice",
     )
     max_priority_fee_per_gas: Optional[StrictStr] = Field(
         default=None,
-        description="EIP-1559 max priority fee per gas (wei).",
+        description="EIP-1559 max priority fee per gas (wei). Note: this is an estimate for reference only and may be inaccurate. For accurate gas values, use the Transaction API `GET /api/v1/dex/pre-transaction/gas-price` and `POST /api/v1/dex/pre-transaction/gas-limit`.",
         alias="maxPriorityFeePerGas",
     )
     min_receive_amount: Optional[StrictStr] = Field(

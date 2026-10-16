@@ -62,12 +62,12 @@ class GetAggregatedQuoteResponseDataInner(BaseModel):
     )
     trade_fee: Optional[StrictStr] = Field(
         default=None,
-        description="Estimated network fee for this route in USD. Null when the vendor does not return one.",
+        description="Estimated network fee for this route in USD. Null when the vendor does not return one. Note: this is an estimate for reference only and may be inaccurate. For accurate gas values, use the Transaction API `GET /api/v1/dex/pre-transaction/gas-price` and `POST /api/v1/dex/pre-transaction/gas-limit`.",
         alias="tradeFee",
     )
     estimate_gas_fee: Optional[StrictStr] = Field(
         default=None,
-        description="Estimated gas in the chain's smallest unit (e.g. wei). May be null on Solana.",
+        description="Estimated gas in the chain's smallest unit (e.g. wei). May be null on Solana. Note: this is an estimate for reference only and may be inaccurate. For accurate gas values, use the Transaction API `GET /api/v1/dex/pre-transaction/gas-price` and `POST /api/v1/dex/pre-transaction/gas-limit`.",
         alias="estimateGasFee",
     )
     price_impact_percent: Optional[StrictStr] = Field(
