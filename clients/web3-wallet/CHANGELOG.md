@@ -1,5 +1,13 @@
 # Changelog
 
+## 10.2.0 - 2026-11-26
+
+### Changed (3)
+
+- Updated `binance-common` library to version `4.10.0`
+- Updated `binance-web3-common` library to version `1.1.0`
+- Updated dependencies and python version
+
 ## 10.1.0 - 2026-10-22
 
 ### Changed (15)
